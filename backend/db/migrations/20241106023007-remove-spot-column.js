@@ -8,7 +8,11 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize){
-    await queryInterface.removeColumn('Bookings', 'spot');
+    const bookingTable = await queryInterface.describeTable('Bookings');
+
+    if (bookingTable && bookingTable.spot){
+      await queryInterface.removeColumn('Bookings', 'spot');
+    }
   },
 
   async down(queryInterface, Sequelize){
