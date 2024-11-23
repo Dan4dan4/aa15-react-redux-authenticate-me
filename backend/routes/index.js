@@ -1,3 +1,6 @@
+require('dotenv').config();  // Load environment variables from .env
+
+
 // backend/routes/index.js
 const express = require('express');
 const router = express.Router();
