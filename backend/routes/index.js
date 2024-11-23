@@ -38,4 +38,8 @@ if (process.env.NODE_ENV !== 'production') {
       'XSRF-Token': csrfToken
     });
   });
+const apiRouter = require('./api');
+router.use('/api', apiRouter);
+module.exports = router;
+
 }
