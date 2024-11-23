@@ -1,9 +1,10 @@
 const express = require('express');
-const { Op, Spot, SpotImage, Review, reviewImage, User } = require('sequelize');
+const { Op, Spot, SpotImage, Review, reviewImage, User } = require('../../db/models');
 const router = express.Router();
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
 const reviewimage = require('../../db/models/reviewimage');
+
 
 const validateSpot = [
     check('address')
@@ -147,7 +148,7 @@ router.get('/', async (req,res) => {
         }
     })
     
-    return res.status(200).json(await Spot.findAll())
+    return res.status(200).json(returnAllSpots)
 })
 
 

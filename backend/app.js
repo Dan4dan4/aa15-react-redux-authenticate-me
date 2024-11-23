@@ -7,12 +7,14 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const { ValidationError } = require('sequelize');
 
+
 const { environment } = require('./config');
 const isProduction = environment === 'production';
 
 const app = express();
 
 const routes = require('./routes');
+
 
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -41,6 +43,8 @@ if (!isProduction) {
       }
     })
   );
+
+
 
 app.use(routes); // Connect all the routes
 
@@ -78,5 +82,10 @@ app.use((err, _req, res, _next) => {
     stack: isProduction ? null : err.stack
   });
 });
+
+
+
+
+
 
 module.exports = app;

@@ -87,6 +87,22 @@ router.get('/bookings', async (req, res) => {
   } else return res.status(200).json({ user: null });
 })
 
+router.get('/session', (req, res) => {
+  const { user } = req;
+  if (user) {
+    return res.status(200).json({
+      user: {
+        id: user.id,
+        firstname: user.firstName,
+        lastname: user.lastName,
+        email: user.email,
+        username: user.username
+      }
+    });
+  } else {
+    return res.status(200).json({ user: null });
+  }
+});
 
 
   module.exports = router;
