@@ -17,6 +17,9 @@ const removeUser = () => {
   };
 };
 
+//default state
+const initialState = { user: null };
+
 //thunks to login
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
@@ -29,6 +32,7 @@ export const login = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data.user));
+  console.log(data); 
   return response;
 };
 
@@ -58,8 +62,15 @@ export const signup = (user) => async (dispatch) => {
   return response;
 };
 
-//default state
-const initialState = { user: null };
+//logout thunk
+export const logout = () => async (dispatch) => {
+  const response = await csrfFetch('/api/session', {
+    method: 'DELETE'
+  });
+  dispatch(removeUser());
+  return response;
+};
+
 
 //reducers
 const sessionReducer = (state = initialState, action) => {
@@ -79,5 +90,6 @@ export const sessionActions = {
     login,
     setUser,
     removeUser,
-    signup
+    signup,
+    logout
   };
