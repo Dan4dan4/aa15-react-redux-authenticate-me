@@ -1,11 +1,12 @@
-import { FaCarrot } from 'react-icons/fa6';
+import { FaUser } from 'react-icons/fa';
 
-const Carrot = () => {
-    return (
-      <div style={{ color: "orange", fontSize: "100px" }}>
-        <FaCarrot />
-      </div>
-    );
-  };
+const ProfileButton = ({user}) => {
+  return (
+    <div style={{ color: "blue", fontSize: "40px" }}>
+      <FaUser />
+      <span>{user?.username || "Profile"}</span>
+    </div>
+  );
+};
 
-  export default Carrot
+export default ProfileButton;

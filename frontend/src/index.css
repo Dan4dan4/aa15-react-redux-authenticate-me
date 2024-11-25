@@ -1,1 +1,13 @@
-/* TODO: Add sitewide styles */
+/* Global styling */
+/* testing */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: beige;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  

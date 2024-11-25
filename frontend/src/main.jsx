@@ -19,13 +19,7 @@ if (import.meta.env.MODE !== "production") {
   window.sessionActions = sessionActions; // <-- ADD THIS LINE
 }
 
-// Dispatch the login action
-store.dispatch(
-  sessionActions.login({
-    credential: "Demo-lition",
-    password: "password"
-  })
-);
+
 
 
 if (import.meta.env.MODE !== 'production') {
