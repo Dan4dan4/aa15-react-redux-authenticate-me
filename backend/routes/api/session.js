@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 
 // POST /api/session (Login)
 router.post('/', async (req, res) => {
-  if (req.user === null) {
+  if (!req.user) {
     res.json({ user: null });
   } else {
     res.json({
@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
         firstName: req.user.firstName,
         lastName: req.user.lastName,
         email: req.user.email,
-        username: req.user.username,
+        username: req.user.username
       }
     });
   }

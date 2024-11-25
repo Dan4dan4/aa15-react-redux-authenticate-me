@@ -3,6 +3,7 @@ const { Spot, Booking, User, Review, reviewImage } = require('../../db/models');
 const express = require('express');
 const reviewimage = require('../../db/models/reviewimage');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 
 // Get current user's info
 router.get('/', (req, res) => {
@@ -104,20 +105,47 @@ router.get('/session', (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
-  if (req.user === null) {
-    res.json({ user: null });
-  } else {
-    res.json({
-      user: {
-        id: req.user.id,
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        email: req.user.email,
-        username: req.user.username,
-      }
-    });
+
+// POST /api/users (Sign Up)
+router.post('/', (req, res) => {
+  const { firstName, lastName, email, username, password } = req.body;
+
+  // Validation: Check if required fields are provided
+  if (!firstName || !lastName || !email || !username || !password) {
+    return res.status(400).json({ error: "All fields are required." });
   }
+
+  // Hash the password before saving to the database
+  bcrypt.hash(password, 10)
+    .then(hashedPassword => {
+      // Save the user with the hashed password
+      return User.create({
+        firstName,
+        lastName,
+        email,
+        username,
+        hashedPassword  // Use the hashed password field
+      });
+    })
+    .then(newUser => {
+      // Send back the newly created user in the required format
+      return res.json({
+        user: {
+          id: newUser.id,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          email: newUser.email,
+          username: newUser.username
+        }
+      });
+    })
+    .catch(error => {
+      console.error("Error signing up user:", error);
+      return res.status(500).json({ error: "An error occurred while signing up." });
+    });
 });
+
+
+
 
   module.exports = router;

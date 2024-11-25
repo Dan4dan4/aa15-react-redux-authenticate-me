@@ -19,7 +19,7 @@ router.use(restoreUser);
 router.use('/login', loginRouter);
 router.use('/logout', logoutRouter);
 router.use('/signup', signupRouter);
-router.use('/user', userRouter);
+router.use('/users', userRouter);
 router.use('/spots', spotsRouter);
 router.use('/bookings', bookingsRouter);
 router.use('/reviews', reviewsRouter);
