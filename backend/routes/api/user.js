@@ -104,5 +104,20 @@ router.get('/session', (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  if (req.user === null) {
+    res.json({ user: null });
+  } else {
+    res.json({
+      user: {
+        id: req.user.id,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        email: req.user.email,
+        username: req.user.username,
+      }
+    });
+  }
+});
 
   module.exports = router;
