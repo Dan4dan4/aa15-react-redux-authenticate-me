@@ -110,25 +110,22 @@ router.get('/session', (req, res) => {
 router.post('/', (req, res) => {
   const { firstName, lastName, email, username, password } = req.body;
 
-  // Validation: Check if required fields are provided
   if (!firstName || !lastName || !email || !username || !password) {
     return res.status(400).json({ error: "All fields are required." });
   }
 
-  // Hash the password before saving to the database
   bcrypt.hash(password, 10)
     .then(hashedPassword => {
-      // Save the user with the hashed password
       return User.create({
         firstName,
         lastName,
         email,
         username,
-        hashedPassword  // Use the hashed password field
+        hashedPassword 
       });
     })
     .then(newUser => {
-      // Send back the newly created user in the required format
+
       return res.json({
         user: {
           id: newUser.id,
