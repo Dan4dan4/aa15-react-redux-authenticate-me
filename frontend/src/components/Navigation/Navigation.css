@@ -1,53 +1,31 @@
-/* General Styling for the Navbar */
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex; 
-    justify-content: flex-end;
-    background-color: #000000; 
-    padding: 10px 20px;
-    height: 50px; 
-  }
-  
-  /*navbar links */
-  #navbar {
-    color: white; 
-    text-decoration: none; 
-    font-size: 20px; 
-    padding: 10px 15px; 
-    /* display: block; */
-  }
-  
-  #home {
-    display: flex; 
-    justify-content: flex-start;
-    color: white; 
-    text-decoration: none; 
-    font-size: 20px; 
-    padding: 10px 15px; 
-    /* display: block; */
-  }
 
- /* active style/hover */
-  #navbar.active {
-    background-color: #a28bd6; 
-    border-radius: 5px;
-  }
-  
-
-#picture {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
-  }
-  
-li {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    color: white;
-    font-size: 16px;
+.nav-bar {
+  list-style-type: none;
+  margin: 0;
+  background-color: #000000; 
+  height: 50px; 
+  display: flex;
+  align-items: center;
+  padding: 10px;;
+  list-style-type: none;
 }
+
+/* home*/
+.nav-bar .active {
+  font-weight: bold;
+  color: #007bff; 
+}
+
+/* home on left */
+#leftside {
+  margin-right: auto; /* Push "Home" to the left side */
+}
+
+/* space between login and sign in */
+#rightside {
+  margin: 0 10px; 
+  
+}
+
+
+

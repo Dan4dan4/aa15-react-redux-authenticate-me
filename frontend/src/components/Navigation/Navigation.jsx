@@ -12,20 +12,20 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
-        <ProfileButton user={sessionUser} />
+      <li className="session-link">
+        <ProfileButton id="profile" user={sessionUser} />
       </li>
     );
   } else {
     sessionLinks = (
       <>
-        <li>
+        <li id="rightside">
           <OpenModalButton
             buttonText="Log In"
             modalComponent={<LoginFormModal />}
           />
         </li>
-        <li>
+        <li id="rightside">
           <OpenModalButton
             buttonText="Sign Up"
             modalComponent={<SignupFormModal />}
@@ -36,13 +36,14 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <ul>
-      <li>
+    <ul className="nav-bar">
+      <li id="leftside">
         <NavLink to="/" activeClassName="active">Home</NavLink>
       </li>
       {isLoaded && sessionLinks}
     </ul>
   );
 }
+
 
 export default Navigation;
