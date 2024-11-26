@@ -66,7 +66,7 @@ export const signup = (user) => async (dispatch) => {
 
 //logout thunk
 export const logout = () => async (dispatch) => {
-  const response = await csrfFetch('/api/session', {
+  const response = await csrfFetch('/api/logout', {
     method: 'DELETE'
   });
   dispatch(removeUser());
@@ -80,6 +80,7 @@ const initialState = { user: null };
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
+      console.log("Setting user:", action.payload); 
       return { ...state, user: action.payload };
       case REMOVE_USER:
         return { ...state, user: null };
