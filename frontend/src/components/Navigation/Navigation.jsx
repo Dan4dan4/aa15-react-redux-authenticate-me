@@ -1,30 +1,35 @@
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import LoginFormModal from '../LoginFormModal/LogInFormModal';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
-  const sessionUser = useSelector(state => state.session.user);
+function Navigation({ isLoaded }) {
+  const sessionUser = useSelector((state) => state.session.user);
 
   const sessionLinks = sessionUser ? (
-    <li>
-      <ProfileButton id="picture" user={sessionUser} />
+    <li >
+      <ProfileButton user={sessionUser} />
     </li>
   ) : (
     <>
-      <li >
-        <NavLink  id= "navbar" to="/login">Log In</NavLink>
+      <li>
+        <OpenModalButton
+          buttonText="Log In"
+          modalComponent={<LoginFormModal />}
+        />
       </li>
       <li>
-        <NavLink id= "navbar" to="/signup">Sign Up</NavLink>
+        <NavLink to="/signup">Sign Up</NavLink>
       </li>
     </>
   );
 
   return (
     <ul>
-      <li >
-        <NavLink id= "navbar" to="/">Home</NavLink>
+      <li>
+        <NavLink to="/">Home</NavLink>
       </li>
       {isLoaded && sessionLinks}
     </ul>
