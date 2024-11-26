@@ -1,48 +1,53 @@
-/* frontend/src/components/Navigation/Navigation.css */
-
-/* Basic styling for the navigation container */
-.navbar {
-    background-color: #630808;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-}
-
-/* Styling for navigation links */
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
+/* General Styling for the Navbar */
+ul {
+    list-style-type: none;
     margin: 0;
-}
+    padding: 0;
+    display: flex; 
+    justify-content: flex-end;
+    background-color: #000000; 
+    padding: 10px 20px;
+    height: 50px; 
+  }
+  
+  /*navbar links */
+  #navbar {
+    color: white; 
+    text-decoration: none; 
+    font-size: 20px; 
+    padding: 10px 15px; 
+    /* display: block; */
+  }
+  
+  #home {
+    display: flex; 
+    justify-content: flex-start;
+    color: white; 
+    text-decoration: none; 
+    font-size: 20px; 
+    padding: 10px 15px; 
+    /* display: block; */
+  }
 
-.nav-links li {
-    position: relative;
-}
+ /* active style/hover */
+  #navbar.active {
+    background-color: #a28bd6; 
+    border-radius: 5px;
+  }
+  
 
-.nav-links a {
+#picture {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
     color: white;
-    text-decoration: none;
-    padding: 8px 15px;
-    display: block;
     font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.nav-links a:hover {
-    background-color: #575757;
-    border-radius: 4px;
-}
-
-/* Dropdown menu styles */
-.dropdown {
-    position: relative;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%
+  }
+  
+li {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: white;
+    font-size: 16px;
 }

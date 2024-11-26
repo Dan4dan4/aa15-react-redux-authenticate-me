@@ -1,12 +1,31 @@
-import { FaUser } from 'react-icons/fa';
+// import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { FaUserCircle } from 'react-icons/fa';
+import * as sessionActions from '../../store/session';
 
-const ProfileButton = ({user}) => {
+function ProfileButton({ user }) {
+  const dispatch = useDispatch();
+
+  const logout = (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.logout());
+  };
+
   return (
-    <div style={{ color: "blue", fontSize: "40px" }}>
-      <FaUser />
-      <span>{user?.username || "Profile"}</span>
-    </div>
+    <>
+      <button>
+        <FaUserCircle />
+      </button>
+      <ul className="profile-dropdown">
+        <li>{user.username}</li>
+        <li>{user.firstName} {user.lastName}</li>
+        <li>{user.email}</li>
+        <li>
+          <button onClick={logout}>Log Out</button>
+        </li>
+      </ul>
+    </>
   );
-};
+}
 
 export default ProfileButton;
