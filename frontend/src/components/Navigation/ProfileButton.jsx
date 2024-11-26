@@ -2,16 +2,19 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
-import './ProfileButton.css'
+import LoginFormModal from '../LoginFormModal/LogInFormModal';
+import SignupFormModal from '../SignupFormModal/SignupFormModal';
+import OpenModalButton from '../OpenModalButton/OpenModalButton'; // Import OpenModalButton
+import './ProfileButton.css';
 
 function ProfileButton({ user }) {
+
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep click from bubbling up to document and triggering closeMenu
-    // if (!showMenu) setShowMenu(true);
+    e.stopPropagation();// Keep from bubbling up to document and triggering closeMenu
     setShowMenu(!showMenu);
   };
 
@@ -36,10 +39,36 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
+  // if no user show profile pic that opens dropdown to log/sing up 
+  if (!user) {
+    return (
+      <>
+        <button onClick={toggleMenu}>
+          <FaUserCircle id="picture" />
+        </button>
+        <ul className={ulClassName} ref={ulRef}>
+          <li>
+            <OpenModalButton
+              buttonText="Log In"
+              modalComponent={<LoginFormModal />}
+            />
+          </li>
+          <li>
+            <OpenModalButton
+              buttonText="Sign Up"
+              modalComponent={<SignupFormModal />}
+            />
+          </li>
+        </ul>
+      </>
+    );
+  }
+
+  // if singeed in then show username, name and email and logout
   return (
     <>
       <button onClick={toggleMenu}>
-        <FaUserCircle id="picture"/>
+        <FaUserCircle id="picture" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
         <li>{user.username}</li>

@@ -10,22 +10,23 @@
   list-style-type: none;
 }
 
-/* home*/
+/* home on left side*/
 .nav-bar .active {
   font-weight: bold;
   color: #007bff; 
+  margin-right: auto;
 }
 
-/* home on left */
+/* home on left and profile right */
 #leftside {
-  margin-right: auto; /* Push "Home" to the left side */
+  margin-right: auto; 
 }
 
 /* space between login and sign in */
-#rightside {
+/* #rightside {
   margin: 0 10px; 
   
-}
+} */
 
 
 
