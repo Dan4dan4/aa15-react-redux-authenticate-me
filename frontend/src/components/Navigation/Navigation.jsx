@@ -5,6 +5,7 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormModal/LogInFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
 import './Navigation.css';
+// import * as sessionActions from '../../store/session';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -12,9 +13,10 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li className="session-link">
+      <li className="nav-bar">
         <ProfileButton id="profile" user={sessionUser} />
       </li>
+      
     );
   } else {
     sessionLinks = (
