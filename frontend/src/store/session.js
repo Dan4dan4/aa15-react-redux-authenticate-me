@@ -46,7 +46,6 @@ export const restoreUser = () => async (dispatch) => {
 
 //thunks to signup works
 export const signup = (user) => async (dispatch) => {
-  // console.log("hello")
   const { username, firstName, lastName, email, password } = user;
   //is this user or users
   const response = await csrfFetch("/api/users", {

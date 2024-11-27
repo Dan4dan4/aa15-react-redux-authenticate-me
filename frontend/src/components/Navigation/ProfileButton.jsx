@@ -8,7 +8,6 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton'; // Import Open
 import './ProfileButton.css';
 
 function ProfileButton({ user }) {
-
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -71,7 +70,7 @@ function ProfileButton({ user }) {
         <FaUserCircle id="picture" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
+        <li> {`Hello, ${user.username}`}</li>
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
         <li>
