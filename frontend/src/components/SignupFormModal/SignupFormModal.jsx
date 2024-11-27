@@ -17,24 +17,25 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  // disbale signupbtn if these dont meet
-  const checkingFormValidation = () => {
-    return (
-      email && username.length >= 4 && firstName && lastName && password === confirmPassword
-    )
-  }
-   const disableSignupBtn = !checkingFormValidation()
-
- 
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrors({});
+    const newErrors = {};
+    
     //if password isnt same as confirmed
-    if (password === confirmPassword) {
+    if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Confirm Password field must be the same as the Password field"}
+    if (username.length < 4) {
+      newErrors.username = "Username must be atleast 4 characters"}
+    if (password.length < 6) {
+      newErrors.password = "Password must be atleast 6 characters"}
 
-      setErrors({});
+    if(Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+
 
       return dispatch(
         sessionActions.signup({
@@ -56,11 +57,9 @@ function SignupFormModal() {
             setErrors(data.errors);
           }
         });
-    }
     
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
+    
+
   };
 
   
@@ -131,7 +130,7 @@ function SignupFormModal() {
         {errors.confirmPassword && (
           <p>{errors.confirmPassword}</p>
         )}
-        <button type="submit" disabled= {disableSignupBtn} >Sign Up</button>
+        <button type="submit" disabled= {username.length <4 || password.length < 6 || password !== confirmPassword} >Sign Up</button>
       </form>
     </>
   );
