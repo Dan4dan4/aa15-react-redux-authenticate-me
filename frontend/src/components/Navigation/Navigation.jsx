@@ -9,7 +9,9 @@ function Navigation({ isLoaded }) {
   return (
     <ul className="nav-bar">
       <li id="leftside">
-        <NavLink to="/" activeClassName="active">Home</NavLink>
+        <NavLink to="/" activeClassName="active">
+        <img src= "/sleepIn-1.png" alt= "Home" />
+        </NavLink>
       </li>
       {isLoaded && (
         <li className="nav-bar">
