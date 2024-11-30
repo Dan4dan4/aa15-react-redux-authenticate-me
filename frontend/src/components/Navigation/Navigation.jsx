@@ -10,7 +10,7 @@ function Navigation({ isLoaded }) {
     <ul className="nav-bar">
       <li id="leftside">
         <NavLink to="/" activeClassName="active">
-        <img src= "/sleepIn-1.png" alt= "Home" />
+        <img src= "/Logo.png" alt= "Home" className='home-logo' />
         </NavLink>
       </li>
       {isLoaded && (

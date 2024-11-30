@@ -2,7 +2,7 @@
 .nav-bar {
   list-style-type: none;
   margin: 0;
-  background-color: #000000; 
+  background-color: white; 
   height: 50px; 
   display: flex;
   align-items: center;
@@ -28,5 +28,6 @@
   
 } */
 
-
-
+.home-logo{
+  height: 50px;
+}
