@@ -21,7 +21,7 @@ const removeUser = () => {
 //thunks to login
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
-  const response = await csrfFetch("/api/session", {
+  const response = await csrfFetch("/api/login", {
     method: "POST",
     body: JSON.stringify({
       credential,
@@ -29,8 +29,12 @@ export const login = (user) => async (dispatch) => {
     })
   });
   const data = await response.json();
-  dispatch(setUser(data.user));
-  console.log(data); 
+  if(response.ok && data.user){
+    dispatch(setUser(data.user));
+  }else{
+    throw new Error (data.errors ? data.errors[0] : "Login Failed")
+  }
+  // console.log(data); 
   return response;
 };
 
@@ -48,7 +52,7 @@ export const restoreUser = () => async (dispatch) => {
 export const signup = (user) => async (dispatch) => {
   const { username, firstName, lastName, email, password } = user;
   //is this user or users
-  const response = await csrfFetch("/api/users", {
+  const response = await csrfFetch("/api/signup", {
     method: "POST",
     body: JSON.stringify({
       username,

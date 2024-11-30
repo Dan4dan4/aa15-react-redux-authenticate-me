@@ -15,15 +15,41 @@ function LoginFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
+    // const newErrors = {}
+
+    // if (password.length < 6 || credential.length < 4){
+    //   newErrors.password = "The provided crendetials were invalid"
+
+    // if(Object.keys(newErrors).length > 0) {
+    //   setErrors(newErrors)
+    //   return
+    // }
+
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
+        console.log("Login failed, response:", res);
         const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
+        if (data?.errors) {
+          setErrors({credential: "The provided credentials were invalid"});
         }
       });
   };
+
+  const demoLogin = () => {
+    const demoUser = {credential: "demo", password: "password"}
+    return dispatch(sessionActions.login(demoUser))
+    .then(closeModal)
+    .catch(async (res) => {
+
+      const data = await res.json();
+
+      if (data?.errors) {
+        setErrors(data.errors);
+      }
+    });
+
+  }
 
   return (
     <>
@@ -38,6 +64,7 @@ function LoginFormModal() {
             required
           />
         </label>
+        {errors.credential && <p className="error-message">{errors.credential}</p>}
         <label>
           Password
           <input
@@ -48,10 +75,12 @@ function LoginFormModal() {
           />
         </label>
         {errors.credential && (
-          <p>{errors.credential}</p>
+          <p className='error-msg'>{errors.credential}</p>
         )}
-        <button type="submit">Log In</button>
+        
+        <button type="submit" disabled = {credential.length < 4 || password.length < 6}>Log In</button>
       </form>
+      <button onClick={demoLogin}> Login as Demo </button>
     </>
   );
 }

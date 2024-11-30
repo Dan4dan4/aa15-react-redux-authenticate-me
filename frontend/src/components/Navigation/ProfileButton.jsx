@@ -6,11 +6,13 @@ import LoginFormModal from '../LoginFormModal/LogInFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton'; // Import OpenModalButton
 import './ProfileButton.css';
+import { useNavigate } from 'react-router';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const navigate = useNavigate()
 
   const toggleMenu = (e) => {
     e.stopPropagation();// Keep from bubbling up to document and triggering closeMenu
@@ -29,11 +31,13 @@ function ProfileButton({ user }) {
     document.addEventListener('click', closeMenu);
 
     return () => document.removeEventListener('click', closeMenu);
-  }, [showMenu]);
-
+  }, [showMenu])
+  
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    setShowMenu(false);
+    navigate('/')
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
