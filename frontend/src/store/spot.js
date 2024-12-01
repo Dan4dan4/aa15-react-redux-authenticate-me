@@ -3,7 +3,7 @@
 import { spotsData } from "../components/Spots/Spotsdata"
 import { csrfFetch } from "./csrf"
 
-const ADD_SPOT = "session/setSpot"
+const ADD_SPOT = "session/addSpot"
 const LOAD_SPOTS = "session/loadSpots"
 
 //actions loadspot and addspot
@@ -70,13 +70,13 @@ export const createSpot = (spot) => async (dispatch) => {
 
 
 //default state
-const initialState = { user: null };
+const initialState = { user: null, allSpots:[] };
 
 const spotReducer = (state = initialState, action) => {
     switch(action.type) {
         case LOAD_SPOTS:
             {let state1 = {...state}
-            state.allSpots = action.payload
+            state1.allSpots = action.payload
             return state1}
         case ADD_SPOT:
             {const newState = {...state}

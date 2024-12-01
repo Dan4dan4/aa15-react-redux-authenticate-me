@@ -2,11 +2,13 @@ import './AddSpot.css'
 // import { spotsData } from '../Spots/Spotsdata'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-// import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import * as spotActions from '../../store/spot'
+import { spotsData } from '../Spots/Spotsdata'
 
 function AddSpot() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [country,setCountry] = useState("")
     const [address,setaddress] = useState("")
     const [city,setcity] = useState("")
@@ -22,7 +24,7 @@ function AddSpot() {
     const [spotImg4,setSpotImg4] = useState("")
     const [spotImg5,setSpotImg5] = useState("")
     const [errors,setErrors] = useState({})
-    // const navigate = useNavigate()
+   
 
    const handleSubmit = (e) => {
     e.preventDefault()
@@ -65,7 +67,17 @@ function AddSpot() {
         return
     }
 
-    // navigate('/')
+    const newSpot = {
+        id: spotsData.length +1,
+        title: name,
+        image: spotImg,
+        price,
+        city,
+        state
+    }
+
+    spotsData.push(newSpot)
+    
     return dispatch(
         spotActions.createSpot({
             country,
@@ -84,6 +96,14 @@ function AddSpot() {
             spotImg5
         })
     )
+        .then((newSpot) => {
+            if(newSpot ){
+                navigate(`/spots/${newSpot.id}`)
+            }
+        })
+        .catch((err) => {
+            throw new Error("failed", err)
+        })
    }
 
 

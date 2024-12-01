@@ -1,7 +1,9 @@
 import { spotsData } from "./Spotsdata"
 import './Spots.css'
+// import { useSelector } from "react-redux"
 
 function Spots() {
+    
     return (
         <div className="spots-container">
             {spotsData.map((spot) => (
