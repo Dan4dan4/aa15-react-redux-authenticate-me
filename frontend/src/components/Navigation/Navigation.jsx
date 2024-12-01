@@ -16,7 +16,7 @@ function Navigation({ isLoaded }) {
 
          {/* if signed in then createspot btn */}
       {sessionUser && ( 
-             <NavLink to="/addspot" className="createspot">Create A Spot</NavLink> 
+             <NavLink to="/addspot" className="createspot">Create a New Spot</NavLink> 
          )}
 
       {isLoaded && (

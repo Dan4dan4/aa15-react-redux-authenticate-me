@@ -1,0 +1,56 @@
+.add-spot-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 1px;
+    width: 100%;
+}
+
+#country-name{
+    width: 50%;
+}
+
+#street-name{
+    width: 50%;
+}
+
+.city-state{
+    display: flex;
+    gap:20px ;
+}
+
+.city-box{
+    width: 50%;
+    text-align: center;
+}
+.state-box{
+    width: 50%;
+    text-align: center;
+}
+
+.horizontal-line{
+    color: black;
+    width: 50%;
+    height: 1px;
+    background-color: black;
+    border: 0px;
+}
+
+#description{
+    height: 100px;
+    resize: vertical;
+    width: 61%;
+}
+
+#spotname{
+    width: 50%;
+}
+
+#price{
+    width: 50%;
+}
+
+#photoURL{
+    width: 50%;
+}
