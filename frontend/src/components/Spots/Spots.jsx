@@ -9,6 +9,10 @@ function Spots() {
                     <img src={spot.image} alt={spot.title} className="spot-image" />
                     <div className="spot-info">
                 <h3>{spot.title}</h3>
+                <p className="spot-location">
+                    {spot.city}, {spot.state}
+
+                </p>
                 <p>{spot.price}</p>
           </div>
         </div>
