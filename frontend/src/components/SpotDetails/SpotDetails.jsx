@@ -16,12 +16,12 @@ function SpotDetails() {
         dispatch(getSpotDetails(id));
     }, [dispatch, id]);  // Re-run effect when the id changes
 
-    // If spot data is not available yet, show a loading message
+
     if (!spot) {
-        return <h1>Loading...</h1>;
+        return <h1>Spot doesnt exist</h1>;
     }
 
-    // Handle case where user info is not available (show default value for host)
+
     const hostName = user ? `${user.firstName} ${user.lastName}` : "Unknown Host";
 
 return(

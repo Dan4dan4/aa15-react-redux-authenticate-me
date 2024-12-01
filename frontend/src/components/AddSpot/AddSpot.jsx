@@ -78,7 +78,7 @@ function AddSpot() {
 
     spotsData.push(newSpot)
     
-    return dispatch(
+     dispatch(
         spotActions.createSpot({
             country,
             address,

@@ -7,6 +7,7 @@ import SignupFormModal from '../SignupFormModal/SignupFormModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton'; // Import OpenModalButton
 import './ProfileButton.css';
 import { useNavigate } from 'react-router';
+import * as spotActions from '../../store/spot'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -39,6 +40,12 @@ function ProfileButton({ user }) {
     setShowMenu(false);
     navigate('/')
   };
+
+  const updateSpot = (e) => {
+    e.preventDefault();
+    dispatch(spotActions.loadUserSpots())
+    navigate('/manage-spots')
+  }
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
@@ -78,6 +85,7 @@ function ProfileButton({ user }) {
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
         <li>
+          <button id="box" onClick={updateSpot}>Mange spots</button>
           <button id="box" onClick={logout}>Log Out</button>
         </li>
       </ul>
