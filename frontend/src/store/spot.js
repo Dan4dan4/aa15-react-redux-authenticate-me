@@ -1,5 +1,6 @@
 // import { spotsData } from "../components/Spots/Spotsdata";
 
+import { spotsData } from "../components/Spots/Spotsdata"
 import { csrfFetch } from "./csrf"
 
 const ADD_SPOT = "session/setSpot"
@@ -23,17 +24,17 @@ const addSpot = (spot) => {
 //thunks to addspot
 export const createSpot = (spot) => async (dispatch) => {
     const { address, city, state, country, name, description, price, lat, lng } = spot;
-    console.log('Spot data:', {
-        address,
-        city,
-        state,
-        country,
-        name,
-        description,
-        price,
-        lat,
-        lng
-    });
+    // console.log('Spot data:', {
+    //     address,
+    //     city,
+    //     state,
+    //     country,
+    //     name,
+    //     description,
+    //     price,
+    //     lat,
+    //     lng
+    // });
     try {
         const response = await csrfFetch("/api/spots", {
             method: "POST",
@@ -53,9 +54,8 @@ export const createSpot = (spot) => async (dispatch) => {
         const data = await response.json();
 
         if (response.ok) {
-            dispatch(addSpot(data)); // Assuming data contains the spot created
+            dispatch(addSpot(data));
         } else {
-            // Log the errors returned from the backend
             console.error('Backend validation errors:', data.errors);
             throw new Error(data.errors ? data.errors.join(', ') : "Spot creation failed");
         }
@@ -75,15 +75,14 @@ const initialState = { user: null };
 const spotReducer = (state = initialState, action) => {
     switch(action.type) {
         case LOAD_SPOTS:
-            return {
-                ...state,
-                allSpots:action.payload
-            };
+            {let state1 = {...state}
+            state.allSpots = action.payload
+            return state1}
         case ADD_SPOT:
-            return {
-                ...state,
-                allSpots: [...state.allSpots, action.payload]
-            }
+            {const newState = {...state}
+            spotsData.push(action.payload);
+            newState.allSpots.push(action.payload)
+            return newState}
         default:
             return state
     }

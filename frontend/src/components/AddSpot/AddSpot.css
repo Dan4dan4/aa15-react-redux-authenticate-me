@@ -67,3 +67,7 @@
 #photoURL{
     width: 50%;
 }
+
+form p {
+    color: red;
+}

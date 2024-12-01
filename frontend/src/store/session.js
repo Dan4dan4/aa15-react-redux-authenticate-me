@@ -83,10 +83,14 @@ const initialState = { user: null };
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
-      // console.log("Setting user:", action.payload); 
-      return { ...state, user: action.payload };
+      {// console.log("Setting user:", action.payload); 
+      let state1 = {...state}
+      state1.user = action.payload
+      return state1}
     case REMOVE_USER:
-        return { ...state, user: null };
+      {let state2 = {...state}
+      state2.user = null
+      return state2 }
     default:
           return state;
   }

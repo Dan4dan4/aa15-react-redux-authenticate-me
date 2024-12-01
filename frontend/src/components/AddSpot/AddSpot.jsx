@@ -41,8 +41,17 @@ function AddSpot() {
     if(!state){
         newErrors.state = "Please add a State"
     }
+    if(!lat){
+        newErrors.lat = "Please add a Latitude"
+    }
+    if(!lng){
+        newErrors.lng = "Please add a Longitude"
+    }
     if(!description){
         newErrors.description = "Please add a Description"
+    }
+    if(!name){
+        newErrors.name = "Please add a Name"
     }
     if(!price){
         newErrors.price = "Please add a Price"
