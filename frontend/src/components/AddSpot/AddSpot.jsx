@@ -97,8 +97,8 @@ function AddSpot() {
         })
     )
         .then((newSpot) => {
-            if(newSpot ){
-                navigate(`/spots/${newSpot.id}`)
+            if(newSpot && newSpot.id){
+                navigate(`/${newSpot.id}`)
             }
         })
         .catch((err) => {
