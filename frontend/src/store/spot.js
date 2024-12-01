@@ -31,7 +31,7 @@ const setSpotDetails = (spot) => {
 
 //thunks to addspot
 export const createSpot = (spot) => async (dispatch) => {
-    const { address, city, state, country, name, description, price, lat, lng } = spot;
+    const { address, city, state, country, name, description, price, lat, lng, previewImage } = spot;
     // console.log('Spot data:', {
     //     address,
     //     city,
@@ -55,7 +55,8 @@ export const createSpot = (spot) => async (dispatch) => {
                 description,
                 price,
                 lat,
-                lng
+                lng,
+                previewImage,
             })
         });
 

@@ -8,7 +8,7 @@ function SpotDefault(){
     const dispatch = useDispatch()
     const spot = useSelector(state => state.spots.spotDetails)
 
-    console.log('spot from redux', spot)
+    // console.log('spot from redux', spot)
 
     useEffect(() => {
         dispatch(getSpotDetails(id))
@@ -21,8 +21,9 @@ function SpotDefault(){
 return(
     <div>
         <h1>{spot.name}</h1>
+        <p>{spot.previewImg}</p>
         <p>{spot.description}</p>
-        <p>{spot.city}</p>
+        <p>{spot.city}, {spot.state}, {spot.country} </p>
     </div>
 )
 }

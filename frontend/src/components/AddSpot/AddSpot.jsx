@@ -18,7 +18,7 @@ function AddSpot() {
     const [description,setdescription] = useState("")
     const [name,setname] = useState("")
     const [price,setprice] = useState("")
-    const [spotImg,setSpotImg] = useState("")
+    const [previewImage,setSpotImg] = useState("")
     const [spotImg2,setSpotImg2] = useState("")
     const [spotImg3,setSpotImg3] = useState("")
     const [spotImg4,setSpotImg4] = useState("")
@@ -58,8 +58,8 @@ function AddSpot() {
     if(!price){
         newErrors.price = "Please add a Price"
     }
-    if(!spotImg){
-        newErrors.spotImg = "Please add a Image"
+    if(!previewImage){
+        newErrors.previewImage = "Please add a Image"
     }
 
     if(Object.keys(newErrors).length >0) {
@@ -70,7 +70,7 @@ function AddSpot() {
     const newSpot = {
         id: spotsData.length +1,
         title: name,
-        image: spotImg,
+        image: previewImage,
         price,
         city,
         state
@@ -89,7 +89,7 @@ function AddSpot() {
             description,
             name,
             price,
-            spotImg,
+            previewImage,
             spotImg2,
             spotImg3,
             spotImg4,
@@ -240,10 +240,10 @@ function AddSpot() {
                         id="photoURL"
                         type= "text"
                         placeholder='Preview Image URL'
-                        value={spotImg}
+                        value={previewImage}
                         onChange={(e) => setSpotImg(e.target.value)}
                         />
-                    {errors.spotImg && <p>{errors.spotImg}</p>}
+                    {errors.previewImage && <p>{errors.previewImage}</p>}
                     <input 
                         id="photoURL"
                         type= "text"
