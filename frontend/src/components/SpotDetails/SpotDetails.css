@@ -1,5 +1,5 @@
-.spot-image{
-    height: 500px;
-    width: 700px;
-    margin: 10px;
+.spot-image2 {
+    max-width: 40%;   
+    border-radius: 8px;  
+    padding: .5%;
 }

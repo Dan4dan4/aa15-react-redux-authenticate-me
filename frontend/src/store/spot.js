@@ -110,10 +110,10 @@ const spotReducer = (state = initialState, action) => {
             newState.allSpots.push(action.payload)
             return newState}
         case SET_SPOT_DETAILS:
-            {let state2 = {...state}
-            state2.spotDetails = action.payload
-            return state2
-            }
+            return {
+                ...state,
+                spotDetails: action.payload,
+            };
         default:
             return state
     }
