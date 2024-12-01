@@ -75,23 +75,32 @@ export const createSpot = (spot) => async (dispatch) => {
     }
 };
 
+
 export const getSpotDetails = (id) => {
     return async (dispatch) => {
-        try{
-            const response = await fetch(`/api/spots/${id}`)
-            const data = await response.json();
+        //check for hardcoded
+        const foundSpot = spotsData.find(spot => spot.id === parseInt(id));
+        if (foundSpot) {
+            dispatch(setSpotDetails(foundSpot));
 
-            if(response.ok){
-                dispatch(setSpotDetails(data))
-            }else{
-            // console.error('Backend validation errors:', data.errors);
-            throw new Error(data.errors ? data.errors.join(', ') : "fetching failed");
+        } else {
+            //fetch
+            try {
+                const response = await fetch(`/api/spots/${id}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    dispatch(setSpotDetails(data));
+                } else {
+                    throw new Error(data.errors ? data.errors.join(', ') : "Fetching failed");
+                }
+            } catch (error) {
+                console.error("Fetching failed:", error.message);
             }
-        }catch (error){
-            throw new Error("fetching failed" + error.message)
         }
-    }
-}
+    };
+};
+
 
 
 
