@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router"
 import { getSpotDetails } from "../../store/spot"
 
-function SpotDefault(){
+function SpotDetails(){
     const {id}= useParams()
     const dispatch = useDispatch()
     const spot = useSelector(state => state.spots.spotDetails)
@@ -14,18 +14,20 @@ function SpotDefault(){
         dispatch(getSpotDetails(id))
     }, [dispatch, id])
 
+
+
     if(!spot){
         return <h1>no spot found</h1>
     }
-
+   
 return(
     <div>
         <h1>{spot.name}</h1>
-        <p>{spot.previewImg}</p>
+        <img src={spot.previewImages} alt={spot.name}/>
         <p>{spot.description}</p>
         <p>{spot.city}, {spot.state}, {spot.country} </p>
     </div>
 )
 }
 
-export default SpotDefault
+export default SpotDetails
