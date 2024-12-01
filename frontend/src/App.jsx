@@ -34,17 +34,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Spots/>
-        // (
-          // <div className='spot-container'>
-          //   <div className='spot-item'>spot1</div>
-          //   <div className='spot-item'>spot2</div>
-          //   <div className='spot-item'>spot3</div>
-          // </div>
-        // )
       },
       {
         path: "signup",
         element: <SignupFormPage />
+      },
+      {
+        path: "addspot",
+        // element: <SignupFormPage />
       }
     ]
   }

@@ -10,7 +10,7 @@
   list-style-type: none;
 }
 
-/* home on left side*/
+/* home on left side */
 .nav-bar .active {
   font-weight: bold;
   color: #007bff; 
@@ -30,4 +30,10 @@
 
 .home-logo{
   height: 50px;
+}
+
+.createspot{
+  font-size: 20px;
+  color: #000; 
+  text-decoration: none;
 }

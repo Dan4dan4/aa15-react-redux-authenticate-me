@@ -12,11 +12,20 @@ function Navigation({ isLoaded }) {
         <NavLink to="/" activeClassName="active">
         <img src= "/Logo.png" alt= "Home" className='home-logo' />
         </NavLink>
-      </li>
+         </li>
+
+         {/* if signed in then createspot btn */}
+      {sessionUser && ( 
+             <NavLink to="/addspot" className="createspot">Create A Spot</NavLink> 
+         )}
+
       {isLoaded && (
+        <>
         <li className="nav-bar">
           <ProfileButton id="profile" user={sessionUser} />
         </li>
+
+        </>
       )}
     </ul>
   );
