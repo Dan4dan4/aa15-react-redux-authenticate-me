@@ -29,6 +29,19 @@
     text-align: center;
 }
 
+.lat-lng{
+    display: flex;
+    gap:20px ;
+}
+.lat-box{
+    width: 50%;
+    text-align: center;
+}
+.lng-box{
+    width: 50%;
+    text-align: center;
+}
+
 .horizontal-line{
     color: black;
     width: 50%;

@@ -1,8 +1,89 @@
 import './AddSpot.css'
+// import { spotsData } from '../Spots/Spotsdata'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+// import { useNavigate } from 'react-router'
+import * as spotActions from '../../store/spot'
 
 function AddSpot() {
+    const dispatch = useDispatch()
+    const [country,setCountry] = useState("")
+    const [address,setaddress] = useState("")
+    const [city,setcity] = useState("")
+    const [state,setstate] = useState("")
+    const [lat,setlat] = useState("")
+    const [lng,setlng] = useState("")
+    const [description,setdescription] = useState("")
+    const [name,setname] = useState("")
+    const [price,setprice] = useState("")
+    const [spotImg,setSpotImg] = useState("")
+    const [spotImg2,setSpotImg2] = useState("")
+    const [spotImg3,setSpotImg3] = useState("")
+    const [spotImg4,setSpotImg4] = useState("")
+    const [spotImg5,setSpotImg5] = useState("")
+    const [errors,setErrors] = useState({})
+    // const navigate = useNavigate()
+
+   const handleSubmit = (e) => {
+    e.preventDefault()
+    setErrors({});
+    const newErrors = {};
+
+    if(!country){
+        newErrors.country = "Please add a Country"
+    }
+    if(!address){
+        newErrors.address = "Please add an Address"
+    }
+    if(!city){
+        newErrors.city = "Please add a City"
+    }
+    if(!state){
+        newErrors.state = "Please add a State"
+    }
+    if(!description){
+        newErrors.description = "Please add a Description"
+    }
+    if(!price){
+        newErrors.price = "Please add a Price"
+    }
+    if(!spotImg){
+        newErrors.spotImg = "Please add a Image"
+    }
+
+    if(Object.keys(newErrors).length >0) {
+        setErrors(newErrors)
+        return
+    }
+
+    // navigate('/')
+    return dispatch(
+        spotActions.createSpot({
+            country,
+            address,
+            city,
+            state,
+            lat,
+            lng,
+            description,
+            name,
+            price,
+            spotImg,
+            spotImg2,
+            spotImg3,
+            spotImg4,
+            spotImg5
+        })
+    )
+   }
+
+
+
     return (
        <div className='add-spot-container'>
+        <form onSubmit={handleSubmit}>
+
+
             <h1>Where&apos;s your place located?</h1>
             <h3>Guests will only get your exact address once they booked a reservation.</h3>
             <h4>Country</h4>
@@ -10,14 +91,20 @@ function AddSpot() {
                     id="country-name"
                     type= "text"
                     placeholder='Country'
-                />
+                    value={country} 
+                    onChange={(e) => setCountry(e.target.value)}
+                    />
+                {errors.country && <p>{errors.country}</p>}
 
             <h4>Street Address</h4>
                 <input 
                     id="street-name"
                     type= "text"
                     placeholder='Street Address'
-                />
+                    value={address}
+                    onChange={(e) => setaddress(e.target.value)}
+                    />
+                {errors.address && <p>{errors.address}</p>}
 
             <div className="city-state">
                 <div className='city-box'>
@@ -26,7 +113,10 @@ function AddSpot() {
                         id="city"
                         type= "text"
                         placeholder='City'
-                    />
+                        value={city}
+                        onChange={(e) => setcity(e.target.value)}
+                        />
+                    {errors.city && <p>{errors.city}</p>}
                 </div>
 
                 <div className='state-box'>
@@ -35,7 +125,35 @@ function AddSpot() {
                         id="state"
                         type= "text"
                         placeholder='State'
-                    />
+                        value={state}
+                        onChange={(e) => setstate(e.target.value)}
+                        />
+                    {errors.state && <p>{errors.state}</p>}
+                </div>
+            </div>
+            <div className="lat-lng">
+                <div className='lat-box'>
+                <h4>Latitude</h4>
+                    <input 
+                        id="lat"
+                        type= "text"
+                        placeholder='Latitude'
+                        value={lat}
+                        onChange={(e) => setlat(e.target.value)}
+                        />
+                    {errors.lat && <p>{errors.lat}</p>}
+                </div>
+
+                <div className='lng-box'>
+                <h4>Longitude</h4>
+                    <input 
+                        id="lng"
+                        type= "text"
+                        placeholder='Longitude'
+                        value={lng}
+                        onChange={(e) => setlng(e.target.value)}
+                        />
+                    {errors.lng && <p>{errors.lng}</p>}
                 </div>
             </div>
 
@@ -48,7 +166,10 @@ function AddSpot() {
                         id="description"
                         type= "text"
                         placeholder='Please write at least 30 characters'
-                    />
+                        value={description}
+                        onChange={(e) => setdescription(e.target.value)}
+                        />
+                    {errors.description && <p>{errors.description}</p>}
         </div>
 
         <hr className='horizontal-line'/>  
@@ -57,10 +178,13 @@ function AddSpot() {
                 <h1>Create a title for your spot</h1>
                 <h3>Catch guests attention with a spot title that highlights what makes your plcae special.</h3>
                 <input 
-                        id="spotname"
+                        id="name"
                         type= "text"
                         placeholder='Name of your spot'
-                    />
+                        value={name}
+                        onChange={(e) => setname(e.target.value)}
+                        />
+                    {errors.name && <p>{errors.name}</p>}
         </div>  
 
         <hr className='horizontal-line'/>  
@@ -72,7 +196,10 @@ function AddSpot() {
                         id="price"
                         type= "text"
                         placeholder='Price per night(USD)'
-                    />
+                        value={price}
+                        onChange={(e) => setprice(e.target.value)}
+                        />
+                    {errors.price && <p>{errors.price}</p>}
         </div>  
 
         <hr className='horizontal-line'/>  
@@ -84,31 +211,47 @@ function AddSpot() {
                         id="photoURL"
                         type= "text"
                         placeholder='Preview Image URL'
-                    />
+                        value={spotImg}
+                        onChange={(e) => setSpotImg(e.target.value)}
+                        />
+                    {errors.spotImg && <p>{errors.spotImg}</p>}
                     <input 
                         id="photoURL"
                         type= "text"
                         placeholder='Image URL'
-                    />
+                        value={spotImg2}
+                        onChange={(e) => setSpotImg2(e.target.value)}
+                        />
+                    {errors.spotImg2 && <p>{errors.spotImg2}</p>}
                     <input 
                         id="photoURL"
                         type= "text"
                         placeholder='Image URL'
-                    />
+                        value={spotImg3}
+                        onChange={(e) => setSpotImg3(e.target.value)}
+                        />
+                    {errors.spotImg3 && <p>{errors.spotImg3}</p>}
                     <input 
                         id="photoURL"
                         type= "text"
                         placeholder='Image URL'
-                    />
+                        value={spotImg4}
+                        onChange={(e) => setSpotImg4(e.target.value)}
+                        />
+                    {errors.spotImg4 && <p>{errors.spotImg4}</p>}
                     <input 
                         id="photoURL"
                         type= "text"
                         placeholder='Image URL'
-                    />
-            <button> Create Spot</button>
+                        value={spotImg5}
+                        onChange={(e) => setSpotImg5(e.target.value)}
+                        />
+                    {errors.spotImg5 && <p>{errors.spotImg5}</p>}
         </div>  
+            <button> Create Spot</button>
+        </form>
        </div>
     )
 }
 
-export default AddSpot
+export default AddSpot;
