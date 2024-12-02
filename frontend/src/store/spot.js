@@ -7,8 +7,9 @@ const ADD_SPOT = "session/addSpot"
 const LOAD_SPOTS = "session/loadSpots"
 const SET_SPOT_DETAILS ='spot/spotdetails'
 const UPDATE_SPOT = 'spot/updateSpot'
+const DELETE_SPOT = 'spot/deleteSpot'
 
-//actions loadspot and addspot andsetspotdetails and update spot
+//actions loadspot and addspot andsetspotdetails and update spot nd delete
 const loadSpots = (spots) => {
     return{
         type: LOAD_SPOTS,
@@ -36,6 +37,55 @@ const updateSpot = (spot) => {
         payload: spot
     }
 }
+
+const deleteSpot = (spot) => {
+    return {
+        type: DELETE_SPOT,
+        payload: spot
+    }
+}
+
+export const updateSpots = (spotId, spot) => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/spots/${spotId}`, {
+            method: "PUT",
+            body: JSON.stringify(spot),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            dispatch(updateSpot(data)); 
+            return data;  
+        } else {
+            throw new Error(data.errors ? data.errors.join(', ') : "Spot update failed");
+        }
+    } catch (error) {
+        console.error("Error updating spot:", error);
+        throw new Error(error.message || "Error updating spot");
+    }
+};
+
+export const deleteSpots = (spotId) => async (dispatch) => {
+    try {
+        const response = await csrfFetch(`/api/spots/${spotId}`, {
+          method: "DELETE",
+        });
+    
+        const data = await response.json();
+    
+        if (response.ok) {
+          dispatch(deleteSpot(spotId));
+        } else {
+          throw new Error(data.message || "Error deleting spot");
+        }
+      } catch (error) {
+        console.error("Error deleting spot:", error);
+        throw new Error(error.message || "Error deleting spot");
+      }
+    };
+
+
 
 export const loadUserSpots = () => async (dispatch) => {
     try {
@@ -179,6 +229,11 @@ const spotReducer = (state = initialState, action) => {
                 ),
                 spotDetails: action.payload, 
                 };
+        case DELETE_SPOT:
+            return {
+                ...state,
+                allSpots: state.allSpots.filter((spot) => spot.id !== action.payload),
+                };
         default:
             return state
     }
@@ -191,5 +246,6 @@ export const spotActions = {
     addSpot,
     loadSpots,
     setSpotDetails,
-    updateSpot
+    updateSpot,
+    deleteSpot
 }
