@@ -98,7 +98,7 @@ function AddSpot() {
     )
         .then((newSpot) => {
             if(newSpot && newSpot.id){
-                navigate(`/${newSpot.id}`)
+                navigate(`/spots/${newSpot.id}`)
             }
         })
         .catch((err) => {
@@ -277,7 +277,7 @@ function AddSpot() {
                         />
                     {errors.spotImg5 && <p>{errors.spotImg5}</p>}
         </div>  
-            <button> Create Spot</button>
+            <button className='create-spot'> Create Spot</button>
         </form>
        </div>
     )

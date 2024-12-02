@@ -33,6 +33,7 @@ function EditSpot() {
             navigate('/'); 
             return;
           }
+          
           setCountry(spot.country);
           setAddress(spot.address);
           setCity(spot.city);
@@ -74,7 +75,7 @@ function EditSpot() {
       
         dispatch(spotActions.updateSpots(spot.id, updatedSpot)) 
             .then((updatedSpot) => {
-                if (updatedSpot && updatedSpot.id) {
+                if (updatedSpot || updatedSpot.id) {
                     navigate(`/${updatedSpot.id}`);  
                 }
             })

@@ -1,0 +1,33 @@
+.spots-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    padding: 30px;
+    /* height: auto; */
+    /* margin-right: 100px; */
+   
+  }
+
+  .spot-card {
+    width: calc(33.33% - 20px);
+    /* height: 300px; */
+    box-sizing: border-box;
+    border: 1px solid white;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: beige;
+    display: flex;
+    flex-direction: column;
+    padding: .5%;
+
+  }
+
+  .spot-image {
+    width: 100% ;
+    height: 300%;
+  }
+
+  .btn{
+    cursor: pointer;
+  }

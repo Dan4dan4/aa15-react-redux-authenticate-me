@@ -60,12 +60,14 @@ function ProfileButton({ user }) {
           <li>
             <OpenModalButton
               buttonText="Log In"
+              className="hov"
               modalComponent={<LoginFormModal />}
             />
           </li>
           <li>
             <OpenModalButton
               buttonText="Sign Up"
+              className="hov"
               modalComponent={<SignupFormModal />}
             />
           </li>
@@ -85,8 +87,8 @@ function ProfileButton({ user }) {
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
         <li>
-          <button id="box" onClick={updateSpot}>Mange spots</button>
-          <button id="box" onClick={logout}>Log Out</button>
+          <button className="box" onClick={updateSpot}>Mange spots</button>
+          <button className="box" onClick={logout}>Log Out</button>
         </li>
       </ul>
     </>

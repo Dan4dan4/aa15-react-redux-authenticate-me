@@ -2,19 +2,20 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
 import * as spotActions from '../../store/spot'; 
 import { useNavigate } from 'react-router-dom';
+import './ManageSpot.css'
+import DeleteConfirmationModal from './DeleteModal';
+import { useModal } from '../../context/Modal';
 
 function ManageSpots() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const spots = useSelector(state => state.spots.allSpots);
   const currentUser = useSelector(state => state.session.user);
+  const { setModalContent, setModalVisibility } = useModal();
 
   const handleDelete = async (spotId) => {
-    try {
-      await dispatch(spotActions.deleteSpots(spotId));  
-    } catch (error) {
-      console.error("Error deleting the spot:", error);
-    }
+    setModalContent(<DeleteConfirmationModal spotId={spotId} />);
+    setModalVisibility(true);
   };
 
   const handleEdit = (spotId) => {
@@ -23,25 +24,41 @@ function ManageSpots() {
   useEffect(() => {
     dispatch(spotActions.loadUserSpots());
   }, [dispatch]);
-  const userSpots = spots.filter(spot => spot.ownerId === currentUser?.id);
 
-  return (
-    <div>
-      <h1>Manage Your Spots</h1>
+  const userSpots = spots.filter(spot => spot.ownerId === currentUser?.id);
+console.log(userSpots);
+
+return (
+    <div className="managespots-container">
+      <h1>Manage Spots</h1>
+  
       {userSpots.length > 0 ? (
-        <ul>
+        <div className="spots-container">
           {userSpots.map((spot) => (
-            <li key={spot.id}>
-              <h3>{spot.name}</h3>  
-              <p>{spot.address}, {spot.city}, {spot.state}, {spot.country}</p> 
-              <p>${spot.price} per night</p> 
-              <button onClick={() => handleEdit(spot.id)}>Edit</button>
-              <button onClick={() => handleDelete(spot.id)}>Delete</button>
-            </li>
+            <div key={spot.id} className="spot-card"  onClick={() => handleEdit(spot.id)}>
+              <img src={spot.previewImage} alt={spot.name} className="spot-image" />
+              <div className="spot-info">
+                <h3>{spot.name}</h3>
+                <p className="spot-location">
+                <p>${spot.price} per night</p>
+                  {spot.address}, {spot.city}, {spot.state}, {spot.country}
+                </p>
+                <div className="spot-buttons">
+                  <button className="btn" onClick={() => handleEdit(spot.id)}>Update</button>
+                  <button className="btn" onClick={(e) => { 
+                    e.stopPropagation(); 
+                    handleDelete(spot.id); 
+                  }}>Delete</button>
+                </div>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
-        <p>No spots available. You can add one!</p>
+        <div>
+            <p>No spots to manage</p>
+          <a href="/addspot" className="create-spot-link">Create a New Spot</a>
+        </div>
       )}
     </div>
   );

@@ -71,3 +71,7 @@
 form p {
     color: red;
 }
+
+.create-spot{
+    cursor: pointer;
+}

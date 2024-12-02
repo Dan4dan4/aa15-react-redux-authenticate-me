@@ -1,0 +1,22 @@
+.delete-button{
+    background-color: red;
+    cursor: pointer;
+}
+
+.cancel-button{
+    background-color: darkgray;
+    cursor: pointer;
+}
+.delete-modal-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    /* border-radius: ; */
+  }
+
+  .delete-modal-buttons {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+  }

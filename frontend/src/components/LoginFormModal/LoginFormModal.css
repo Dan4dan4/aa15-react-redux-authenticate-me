@@ -29,3 +29,6 @@ form {
     box-sizing: border-box;
   }
   
+  .logbtn{
+    cursor: pointer;
+  }
