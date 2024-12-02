@@ -1,15 +1,16 @@
-import './EditSpot.css'; 
 import { useState, useEffect } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux'; 
 import { useNavigate, useParams } from 'react-router-dom'; 
-import * as spotActions from '../../store/spot'; 
+import * as spotActions from '../../store/spot';
+import './EditSpot.css'; 
 
 function EditSpot() { 
     const dispatch = useDispatch(); 
     const navigate = useNavigate(); 
-    const { spotId } = useParams();  
+    const { spotId } = useParams();
+    const currentUser = useSelector(state => state.session.user);  
     
-    const spot = useSelector(state => state.spots[spotId]); 
+    const spot = useSelector(state => state.spots.allSpots.find(spot => spot.id === parseInt(spotId)))
     const [country, setCountry] = useState("");
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
@@ -28,29 +29,32 @@ function EditSpot() {
 
     useEffect(() => {
         if (spot) {
-            setCountry(spot.country);
-            setAddress(spot.address);
-            setCity(spot.city);
-            setState(spot.state);
-            setLat(spot.lat);
-            setLng(spot.lng);
-            setDescription(spot.description);
-            setName(spot.title);
-            setPrice(spot.price);
-            setPreviewImage(spot.image);
-            setSpotImg2(spot.img2 || "");
-            setSpotImg3(spot.img3 || "");
-            setSpotImg4(spot.img4 || "");
-            setSpotImg5(spot.img5 || "");
+          if (spot.ownerId !== currentUser.id) {
+            navigate('/'); 
+            return;
+          }
+          setCountry(spot.country);
+          setAddress(spot.address);
+          setCity(spot.city);
+          setState(spot.state);
+          setLat(spot.lat);
+          setLng(spot.lng);
+          setDescription(spot.description);
+          setName(spot.name);
+          setPrice(spot.price);
+          setPreviewImage(spot.previewImage);
+          setSpotImg2(spot.spotImg2);
+          setSpotImg3(spot.spotImg3);
+          setSpotImg4(spot.spotImg4);
+          setSpotImg5(spot.spotImg5);
         }
-    }, [spot]);
+      }, [spot, currentUser, navigate]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         
-      
         const updatedSpot = {
-            id: spotId, 
+            id: spot.id, 
             country,
             address,
             city,
@@ -58,7 +62,7 @@ function EditSpot() {
             lat,
             lng,
             description,
-            title: name,  
+            name ,  
             price,
             image: previewImage,
             img2: spotImg2,
@@ -68,14 +72,14 @@ function EditSpot() {
         };
 
       
-        dispatch(spotActions.updateSpot(updatedSpot)) 
+        dispatch(spotActions.updateSpots(spot.id, updatedSpot)) 
             .then((updatedSpot) => {
                 if (updatedSpot && updatedSpot.id) {
                     navigate(`/${updatedSpot.id}`);  
                 }
             })
             .catch((err) => {
-                console.error("Failed to update the spot", err);
+                console.error("Failed to update spot", err);
             });
     };
 

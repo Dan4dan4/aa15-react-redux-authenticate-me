@@ -247,5 +247,5 @@ export const spotActions = {
     loadSpots,
     setSpotDetails,
     updateSpot,
-    deleteSpot
+    deleteSpot,
 }

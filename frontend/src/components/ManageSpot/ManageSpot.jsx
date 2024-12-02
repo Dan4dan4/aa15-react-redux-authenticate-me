@@ -7,7 +7,7 @@ function ManageSpots() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const spots = useSelector(state => state.spots.allSpots);
-
+  const currentUser = useSelector(state => state.session.user);
 
   const handleDelete = async (spotId) => {
     try {
@@ -23,13 +23,14 @@ function ManageSpots() {
   useEffect(() => {
     dispatch(spotActions.loadUserSpots());
   }, [dispatch]);
+  const userSpots = spots.filter(spot => spot.ownerId === currentUser?.id);
 
   return (
     <div>
       <h1>Manage Your Spots</h1>
-      {spots.length > 0 ? (
+      {userSpots.length > 0 ? (
         <ul>
-          {spots.map((spot) => (
+          {userSpots.map((spot) => (
             <li key={spot.id}>
               <h3>{spot.name}</h3>  
               <p>{spot.address}, {spot.city}, {spot.state}, {spot.country}</p> 
