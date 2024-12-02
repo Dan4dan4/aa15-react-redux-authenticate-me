@@ -68,3 +68,42 @@
     color: white;
     font-weight: bold;
 }
+.review-section {
+    padding: 20px;
+}
+
+.review-box {
+    background-color: wheat;
+    display: flex; 
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.star2 {
+    font-size: 1.5em;
+    margin-right: 5px;
+}
+
+.new3 {
+    font-weight: bold;
+}
+
+.average-rating {
+    font-size: 1.2em;
+    color: black;
+    font-weight: bold;
+    margin-left: 5px;
+}
+.post-review-button {
+    background-color: brown;
+    padding: 10px ;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 200px;
+}
+
+
+

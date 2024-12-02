@@ -12,7 +12,8 @@ export const spotsData = [
         city: "Hallstatt",
         state: "Wills",
         country: "Austria",
-        description: "Escape to this cozy mountain retreat, nestled in the heart of nature. Enjoy stunning views, peaceful surroundings, and modern amenities in a charming home perfect for relaxation and outdoor adventures. Whether you're hiking, skiing, or simply unwinding by the fire, this Airbnb offers the ideal mountain getaway."
+        description: "Escape to this cozy mountain retreat, nestled in the heart of nature. Enjoy stunning views, peaceful surroundings, and modern amenities in a charming home perfect for relaxation and outdoor adventures. Whether you're hiking, skiing, or simply unwinding by the fire, this Airbnb offers the ideal mountain getaway.",
+        review:"ggkjahfkja"
     },
     {
         id:2,

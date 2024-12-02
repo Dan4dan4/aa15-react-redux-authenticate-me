@@ -2,37 +2,33 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router"
 import { getSpotDetails } from "../../store/spot"
-// import { spotsData } from "../Spots/Spotsdata"
 import './SpotDetails.css'
 
+
 function SpotDetails() {
-    const { id } = useParams();  // Get the id from the URL
-    const dispatch = useDispatch();  // Initialize dispatch
-    const spot = useSelector(state => state.spots.spotDetails);  // Get the spot details from Redux store
-    const user = useSelector(state => state.session.user);  // Assuming user info is in session.user
+    const { id } = useParams(); 
+    const dispatch = useDispatch(); 
+    const spot = useSelector(state => state.spots.spotDetails);
+    const user = useSelector(state => state.session.user); 
 
     useEffect(() => {
-        // Dispatch the action to fetch spot details by id
         dispatch(getSpotDetails(id));
-    }, [dispatch, id]);  // Re-run effect when the id changes
-
+    }, [dispatch, id]); 
 
     if (!spot) {
         return <h1>Spot doesnt exist</h1>;
     }
 
-
     const hostName = user ? `${user.firstName} ${user.lastName}` : "Unknown Host";
+    const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id);
+    const isOwner = spot.ownerId === user?.id;
+    const hideBtn = user && !isOwner && !userHasReviewed;
 
-    return(
+    return (
         <div>
             <h1>{spot.title}</h1>
             <img src={spot.image} alt={spot.title} className="spot-image2" />
             <div className="thumbnail-container">
-                {/* <img src={spot.img2} className="fillerphoto" />
-                <img src={spot.img2} className="fillerphoto" />
-                <img src={spot.img2} className="fillerphoto" />
-                <img src={spot.img2} className="fillerphoto" /> */}
             </div>
             <div className="container">
                 <div className="infobox">
@@ -51,9 +47,39 @@ function SpotDetails() {
                     <button className="reserve" onClick={() => alert("Feature coming soon")}>Reserve</button>
                 </div>
             </div>
+            <div className="review-section">
+                <div className="review-box">
+                    <h2>Customer Reviews</h2>
+                    <p className="star2">⭐</p>
+                    {(!spot.reviews || spot.reviews.length === 0) ? 
+                        <span className="new3">New</span> 
+                        : <span className="average-rating">
+                            {(
+                                spot.reviews.reduce((acc, review) => acc + review.rating, 0) / spot.reviews.length
+                            ).toFixed(2)}
+                        </span>}
+                    {spot.reviews && spot.reviews.length > 0 && (
+                        <ul>
+                            {spot.reviews.map((review) => (
+                                <li key={review.id}>
+                                    {review.comment} - {review.rating} stars
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+                {hideBtn && (
+                    <div className="post-review-container">
+                        <button 
+                            className="post-review-button" 
+                            onClick={() => alert("Redirecting to post review form")}>
+                            Post Your Review
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
-    )
-    
+    );
 }
 
-export default SpotDetails
+export default SpotDetails;
