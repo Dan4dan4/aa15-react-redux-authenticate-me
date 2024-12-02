@@ -28,9 +28,23 @@ return(
     <div>
         <h1>{spot.title}</h1>
         <img src={spot.image} alt={spot.title} className="spot-image2" />
-        <p>{spot.description}</p>
-        <p>{spot.city}, {spot.state}, {spot.country} {spot.price} </p>
-        <p>Hosted by {hostName}</p>
+        <div className="thumbnail-container">
+                {/* <img src={spot.img2} className="fillerphoto" />
+                <img src={spot.img2} className="fillerphoto" />
+                <img src={spot.img2} className="fillerphoto" />
+                <img src={spot.img2} className="fillerphoto" /> */}
+            </div>
+        <div className="container">
+            <div className="infobox">
+                <p>Hosted by {hostName}</p>
+                <p className="description">{spot.description}</p>
+                <p>{spot.city}, {spot.state}, {spot.country}</p>
+            </div>
+            <div className="infobox2">
+            <p>{spot.price} night <span className="star">⭐</span></p>
+            <button className="reserve" onClick={() => alert("Feature coming soon")}>Reserve</button>
+            </div>
+        </div>
     </div>
 )
 }

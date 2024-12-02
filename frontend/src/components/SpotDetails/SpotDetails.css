@@ -1,5 +1,60 @@
+.container {
+    display: flex; 
+    /* justify-content: space-between;  */
+    gap: 20px; 
+}
+
 .spot-image2 {
-    max-width: 30%;   
+    width: 90%;
+    max-width: 40%;   
     border-radius: 8px;  
     padding: .5%;
+}
+
+.description {
+    max-width: 70%;
+}
+
+.infobox {
+    background-color: wheat;
+    max-width: 40%;
+    margin-left: .5%; 
+    padding: 10px; 
+    box-sizing: border-box; 
+}
+
+.thumbnail-container {
+    display: flex;               /* Flexbox to arrange thumbnails horizontally */
+    flex-direction: column;      /* Stack thumbnails vertically */
+    gap: 10px;                   /* Adds space between each thumbnail */
+}
+
+.infobox2 {
+    background-color: black;
+    /* max-width: 40%; */
+    height: 150px;
+    width: 150px;
+    margin-left: .5%; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    align-items: center;
+    color: aliceblue;
+}
+
+.infobox p {
+    margin: 20px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    
+}
+
+.star {
+    margin-left: 8px;
+    color: black;    
+    font-size: 1.5em; 
+    width: 30px;
+}
+
+.reserve{
+    cursor: pointer;
 }

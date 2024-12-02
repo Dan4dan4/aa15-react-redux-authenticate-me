@@ -76,7 +76,7 @@ function EditSpot() {
         dispatch(spotActions.updateSpots(spot.id, updatedSpot)) 
             .then((updatedSpot) => {
                 if (updatedSpot || updatedSpot.id) {
-                    navigate(`/${updatedSpot.id}`);  
+                    navigate(`/spots/${spotId}`);  
                 }
             })
             .catch((err) => {
