@@ -28,3 +28,19 @@
     width: 100% ;
     height: 300%;
   }
+
+.big-star-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.star-container {
+    display: flex;
+    align-items: center;
+}
+
+.new {
+    color: black;
+    font-weight: bold;
+}

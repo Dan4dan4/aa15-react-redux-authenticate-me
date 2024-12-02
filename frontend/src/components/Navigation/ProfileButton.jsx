@@ -83,8 +83,8 @@ function ProfileButton({ user }) {
         <FaUserCircle id="picture" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
-        <li> {`Hello, ${user.username}`}</li>
-        <li>{user.firstName} {user.lastName}</li>
+        <li> {`Hello, ${user.firstName}`}</li>
+        {/* <li>{user.firstName}</li> */}
         <li>{user.email}</li>
         <li>
           <button className="box" onClick={updateSpot}>Mange spots</button>
