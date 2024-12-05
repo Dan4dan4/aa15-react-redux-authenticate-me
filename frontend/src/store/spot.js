@@ -13,7 +13,7 @@ const DELETE_SPOT = 'spot/deleteSpot'
 const loadSpots = (spots) => {
     return{
         type: LOAD_SPOTS,
-        payload: spots
+        payload: spots.data
     }
 }
 
