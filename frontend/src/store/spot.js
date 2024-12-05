@@ -161,7 +161,7 @@ export const createSpot = (spot) => async (dispatch) => {
 
         if (response.ok) {
             dispatch(addSpot(data));
-            return data.id
+            return data
         } else {
             console.error('Backend validation errors:', data.errors);
             throw new Error(data.errors ? data.errors.join(', ') : "Spot creation failed");

@@ -19,6 +19,10 @@ function SpotDetails() {
         return <h1>Spot doesnt exist</h1>;
     }
 
+    // console.log(spot)
+
+
+
     const hostName = user ? `${user.firstName} ${user.lastName}` : "Unknown Host";
     const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id);
     const isOwner = spot.ownerId === user?.id;
@@ -72,7 +76,7 @@ function SpotDetails() {
                     <div className="post-review-container">
                         <button 
                             className="post-review-button" 
-                            onClick={() => alert("Redirecting to post review form")}>
+                            onClick={() => alert("make modal for this")}>
                             Post Your Review
                         </button>
                     </div>

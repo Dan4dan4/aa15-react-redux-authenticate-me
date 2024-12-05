@@ -37,6 +37,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Spots/>
+        //this is home 
       },
       {
         path: "signup",
