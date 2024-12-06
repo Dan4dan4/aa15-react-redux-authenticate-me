@@ -1,5 +1,3 @@
-// import { spotsData } from "../components/Spots/Spotsdata";
-
 import { spotsData } from "../components/Spots/Spotsdata"
 import { csrfFetch } from "./csrf"
 
@@ -212,9 +210,12 @@ const spotReducer = (state = initialState, action) => {
             state1.allSpots = action.payload
             return state1}
         case ADD_SPOT:
-            {let newState = {...state}
-            spotsData.push(action.payload);
-            newState.allSpots.push(action.payload)
+            // {let newState = {...state}
+            // spotsData.push(action.payload);
+            // newState.allSpots.push(action.payload)
+            // return newState}
+            {let newState = {...state};
+            newState.allSpots = action.payload;
             return newState}
         case SET_SPOT_DETAILS:
             return {
