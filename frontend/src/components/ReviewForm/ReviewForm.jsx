@@ -6,8 +6,7 @@ function ReviewForm({ spotId }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle the review submission
-    console.log('Review submitted for spotId:', spotId, 'with comment:', comment, 'and rating:', rating);
+
   };
 
   return (
