@@ -12,15 +12,16 @@ module.exports = {
     await Spot.bulkCreate([
       {
         ownerId: 1,
-        address: '100 blah street',
-        city: 'las vegas',
-        state: 'casino',
-        country: 'corn',
+        address: '46 Memory Lane',
+        city: 'Los Venos',
+        state: 'Nevada',
+        country: 'United States',
         lat: -40,
         lng: -39,
-        name: 'mansion',
-        description: 'with the best kernels',
-        price: 30
+        name: 'Mansion in the fields',
+        description: 'Nestled in the heart of serene countryside, this luxurious mansion offers a perfect blend of elegance and tranquility. Set on acres of sprawling fields, the estate boasts stunning panoramic views of rolling green hills, creating a peaceful retreat far from the hustle and bustle of city life.',
+        price: 300,
+        previewImage: "https://images.surferseo.art/fdb08e2e-5d39-402c-ad0c-8a3293301d9e.png"
       },
       {
         ownerId: 2,
