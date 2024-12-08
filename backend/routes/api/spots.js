@@ -198,6 +198,21 @@ router.get('/:spotId', async (req,res) => {
     })
 
 })
+// // DELETE all spots (No authentication needed)
+// router.delete('/', async (req, res) => {
+//     try {
+//       // Delete all spots
+//       await Spot.destroy({
+//         where: {},
+//         truncate: true // This will remove all data from the table without any condition
+//       });
+  
+//       return res.status(200).json({ message: 'All spots have been deleted' });
+//     } catch (error) {
+//       console.error("Error deleting spots:", error);
+//       return res.status(500).json({ error: 'An error occurred while deleting spots.' });
+//     }
+//   });
 
 // Delete spot
 router.delete('/:spotId', async (req, res) => {

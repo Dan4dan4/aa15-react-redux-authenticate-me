@@ -23,6 +23,7 @@ router.get('/', (req, res) => {
   }
 );
 
+
 // Get current user's spots
 router.get('/spots', async (req, res) => {
   if (!req.user) {
