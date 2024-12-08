@@ -30,7 +30,7 @@ function SpotDetails() {
 
     return (
         <div>
-            <h1>{spot.title}</h1>
+            <h1>{spot.name}</h1>
             <img src={spot.previewImage} alt={spot.title} className="spot-image2" />
             <div className="thumbnail-container">
             </div>

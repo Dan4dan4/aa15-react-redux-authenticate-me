@@ -1,10 +1,9 @@
 import './AddSpot.css'
-// import { spotsData } from '../Spots/Spotsdata'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import * as spotActions from '../../store/spot'
-// import { spotsData } from '../Spots/Spotsdata'
+
 
 function AddSpot() {
     const dispatch = useDispatch()

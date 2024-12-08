@@ -36,7 +36,7 @@ function Spots() {
             <img src={spot.previewImage || spot.image} alt={spot.title} className="spot-image" />
             <div className="spot-info">
               <div className="big-star-container">
-                <h3>{spot.title}</h3>
+                <h3>{spot.name}</h3>
                 <div className="star-container">
                   <p className="star">⭐</p>
                   {!spot.reviews ? <span className="new">New</span> : null}
