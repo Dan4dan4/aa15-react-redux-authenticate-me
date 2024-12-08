@@ -1,4 +1,4 @@
-import { spotsData } from "../components/Spots/Spotsdata"
+// import { spotsData } from "../components/Spots/Spotsdata"
 import { csrfFetch } from "./csrf"
 
 const ADD_SPOT = "session/addSpot"
@@ -185,12 +185,6 @@ export const createSpot = (spot) => async (dispatch) => {
 
 export const getSpotDetails = (id) => {
     return async (dispatch) => {
-        //check for hardcoded
-        const foundSpot = spotsData.find(spot => spot.id === parseInt(id));
-        if (foundSpot) {
-            dispatch(setSpotDetails(foundSpot));
-
-        } else {
             //fetch
             try {
                 const response = await fetch(`/api/spots/${id}`);
@@ -206,7 +200,6 @@ export const getSpotDetails = (id) => {
             }
         }
     };
-};
 
 
 
