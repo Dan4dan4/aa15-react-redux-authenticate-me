@@ -36,8 +36,10 @@ function LoginFormModal() {
       });
   };
 
+  
+
   const demoLogin = () => {
-    const demoUser = {credential: "demo", password: "demodemo"}
+    const demoUser = {credential: "demo@user.com", password: "demodemo"}
     return dispatch(sessionActions.login(demoUser))
     .then(closeModal)
     .catch(async (res) => {

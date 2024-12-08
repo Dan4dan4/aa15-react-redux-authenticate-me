@@ -32,7 +32,9 @@ export const login = (user) => async (dispatch) => {
   if(response.ok && data.user){
     dispatch(setUser(data.user));
   }else{
-    throw new Error (data.errors ? data.errors[0] : "Login Failed")
+    throw {
+      errors: data.errors || ["Login failed. Please try again."]
+    };
   }
   // console.log(data); 
   return response;
