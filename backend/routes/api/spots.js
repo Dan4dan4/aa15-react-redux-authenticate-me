@@ -101,9 +101,9 @@ router.post('/', validateSpot, async (req, res, next) => {
             return res.status(401).json({ message: 'Authentication required' });
         }
 
-        const { address, city, state, country, lat, lng, name, description, price } = req.body;
+        const { address, city, state, country, lat, lng, name, description, price, previewImage } = req.body;
         const currentUserId = req.user.id;
-        const spot = await Spot.create({ ownerId: currentUserId, address, city, state, country, lat, lng, name, description, price });
+        const spot = await Spot.create({ ownerId: currentUserId, address, city, state, country, lat, lng, name, description, price, previewImage });
 
 
         return res.status(201).json({
@@ -119,7 +119,8 @@ router.post('/', validateSpot, async (req, res, next) => {
             description: spot.description,
             price: spot.price,
             createdAt: spot.createdAt,
-            updatedAt: spot.updatedAt
+            updatedAt: spot.updatedAt,
+            previewImage: spot.previewImage
         })
     }
 )
@@ -168,7 +169,7 @@ router.get('/:spotId', async (req,res) => {
     const { spotId } = req.params;
     const spot = await Spot.findByPk(spotId, {
         include: [{model: SpotImage}, {model: User, as: 'Owner', attributes: ['id', 'firstName', 'lastName']}],
-        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt', 'numReviews', 'avgRating']
+        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt', 'numReviews', 'avgRating', 'previewImage']
       });
 
     if (!spot) {
@@ -194,7 +195,8 @@ router.get('/:spotId', async (req,res) => {
         numReviews: spot.numReviews,
         avgRating: spot.avgRating,
         SpotImages: spot.SpotImages,
-        Owner: spot.Owner 
+        Owner: spot.Owner,
+        previewImage: spot.previewImage
     })
 
 })
