@@ -13,6 +13,8 @@ function Spots() {
   
   const spots = useSelector(state => state.spots.allSpots);
 
+
+
   useEffect(() => {
     // dispatch(spotActions.resetStore());
     // dispatch(spotActions.clearSpots());

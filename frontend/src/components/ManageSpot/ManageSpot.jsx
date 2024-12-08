@@ -12,6 +12,7 @@ function ManageSpots() {
   const spots = useSelector(state => state.spots.allSpots);
   const currentUser = useSelector(state => state.session.user);
   const { setModalContent, setModalVisibility } = useModal();
+  // console.log('Current User:', currentUser);
 
   const handleDelete = async (spotId) => {
     setModalContent(<DeleteConfirmationModal spotId={spotId} />);
@@ -21,12 +22,15 @@ function ManageSpots() {
   const handleEdit = (spotId) => {
     navigate(`/spots/${spotId}/edit`);
   };
+
   useEffect(() => {
-    dispatch(spotActions.loadUserSpots());
-  }, [dispatch]);
+    if (currentUser) {
+      dispatch(spotActions.loadUserSpots());
+    }
+  }, [dispatch, currentUser]);
 
   const userSpots = spots.filter(spot => spot.ownerId === currentUser?.id);
-console.log(userSpots);
+// console.log(userSpots);
 
 return (
     <div className="managespots-container">

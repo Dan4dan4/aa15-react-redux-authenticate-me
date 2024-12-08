@@ -23,7 +23,7 @@ function SpotDetails() {
 
 
 
-    const hostName = user ? `${user.firstName} ${user.lastName}` : "Unknown Host";
+    const hostName = spot.Owner ? `${spot.Owner.firstName}` : "Unknown Host";
     const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id);
     const isOwner = spot.ownerId === user?.id;
     const hideBtn = user && !isOwner && !userHasReviewed;
