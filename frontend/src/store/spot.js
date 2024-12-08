@@ -1,5 +1,3 @@
-// import { spotsData } from "../components/Spots/Spotsdata";
-
 import { spotsData } from "../components/Spots/Spotsdata"
 import { csrfFetch } from "./csrf"
 
@@ -8,6 +6,8 @@ const LOAD_SPOTS = "session/loadSpots"
 const SET_SPOT_DETAILS ='spot/spotdetails'
 const UPDATE_SPOT = 'spot/updateSpot'
 const DELETE_SPOT = 'spot/deleteSpot'
+const CLEAR_SPOTS = 'spot/clearSpots';
+const RESET_STORE = 'spot/resetStore'
 
 //actions loadspot and addspot andsetspotdetails and update spot nd delete
 const loadSpots = (spots) => {
@@ -44,6 +44,16 @@ const deleteSpot = (spot) => {
         payload: spot
     }
 }
+
+const clearSpots = () => { 
+    return {
+        type: CLEAR_SPOTS
+    };
+};
+
+const resetStore = () => ({
+    type: RESET_STORE
+})
 
 export const updateSpots = (spotId, spot) => async (dispatch) => {
     try {
@@ -213,7 +223,7 @@ const spotReducer = (state = initialState, action) => {
             return state1}
         case ADD_SPOT:
             {let newState = {...state}
-            spotsData.push(action.payload);
+            // spotsData.push(action.payload);
             newState.allSpots.push(action.payload)
             return newState}
         case SET_SPOT_DETAILS:
@@ -234,6 +244,17 @@ const spotReducer = (state = initialState, action) => {
                 ...state,
                 allSpots: state.allSpots.filter((spot) => spot.id !== action.payload),
                 };
+        case CLEAR_SPOTS:  
+            return {
+                ...state,
+                allSpots: []  
+                };
+        case RESET_STORE:
+            return {
+                ...state,
+                allSpots: [],
+                spotDetails: null,
+                    };
         default:
             return state
     }
@@ -248,4 +269,6 @@ export const spotActions = {
     setSpotDetails,
     updateSpot,
     deleteSpot,
+    clearSpots,
+    resetStore,
 }

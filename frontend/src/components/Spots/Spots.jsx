@@ -1,40 +1,57 @@
-import { spotsData } from "./Spotsdata"
-import './Spots.css'
-import { useNavigate } from "react-router"
-// import { useSelector } from "react-redux"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux"; 
+import { useNavigate } from "react-router";
+import { loadUserSpots} from "../../store/spot";
+import './Spots.css';
+// import { spotActions } from '../../store/spot'
+// import { resetStore } from '../../store/spot'
+
 
 function Spots() {
-        const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
+  const spots = useSelector(state => state.spots.allSpots);
 
-        const handleClick = (spotId) => {
-            navigate(`/spots/${spotId}`)
-        }
+  useEffect(() => {
+    // dispatch(spotActions.resetStore());
+    // dispatch(spotActions.clearSpots());
+    // dispatch({ type: 'RESET_STORE' });
+    dispatch(loadUserSpots());
+    // localStorage.clear();
+  }, [dispatch]
+);
 
-        return (
-            <div className="spots-container">
-                {spotsData.map((spot) => (
-                    <div key={spot.id} className="spot-card" onClick={() => handleClick(spot.id)}>
-                        <img src={spot.image} alt={spot.title} className="spot-image" />
-                        <div className="spot-info">
-                            <div className="big-star-container">
-                                <h3>{spot.title}</h3>
-                                <div className="star-container">
-                                    <p className="star">⭐</p>
-                                    {!spot.reviews ? <span className="new">New</span> : null}
-                                </div>
-                            </div>
-                        </div>
-                        <p className="spot-location">
-                            {spot.city}, {spot.state}
-                        </p>
-                        <p>{spot.price} night</p>
-                    </div>
-                ))}
+  const handleClick = (spotId) => {
+    navigate(`/spots/${spotId}`);
+  };
+
+  return (
+    <div className="spots-container">
+      {spots.length === 0 ? (
+        <p>No spots available</p>  
+      ) : (
+        spots.map((spot) => (
+          <div key={spot.id} className="spot-card" onClick={() => handleClick(spot.id)}>
+            <img src={spot.previewImage || spot.image} alt={spot.title} className="spot-image" />
+            <div className="spot-info">
+              <div className="big-star-container">
+                <h3>{spot.title}</h3>
+                <div className="star-container">
+                  <p className="star">⭐</p>
+                  {!spot.reviews ? <span className="new">New</span> : null}
+                </div>
+              </div>
             </div>
-        )
-        
-        
-        
+            <p className="spot-location">
+              {spot.city}, {spot.state}
+            </p>
+            <p>${spot.price} night</p>
+          </div>
+        ))
+      )}
+    </div>
+  );
 }
 
-export default Spots
+export default Spots;

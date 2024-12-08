@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import * as spotActions from '../../store/spot'
-import { spotsData } from '../Spots/Spotsdata'
+// import { spotsData } from '../Spots/Spotsdata'
 
 function AddSpot() {
     const dispatch = useDispatch()
@@ -67,16 +67,16 @@ function AddSpot() {
         return
     }
 
-    const newSpot = {
-        id: spotsData.length +1,
-        title: name,
-        image: previewImage,
-        price,
-        city,
-        state
-    }
+    // const newSpot = {
+    //     id: spotsData.length +1,
+    //     title: name,
+    //     image: previewImage,
+    //     price,
+    //     city,
+    //     state
+    // }
 
-    spotsData.push(newSpot)
+    // spotsData.push(newSpot)
     
      dispatch(
         spotActions.createSpot({
