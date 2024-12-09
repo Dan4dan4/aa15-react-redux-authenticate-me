@@ -10,6 +10,7 @@ import Spots from './components/Spots/Spots';
 import AddSpot from './components/AddSpot/AddSpot';
 import SpotDetail from './components/SpotDetails/SpotDetails'
 import ManageSpots from './components/ManageSpot/ManageSpot';
+import ManageReviews from './components/ManageReviews/ManageReviews'
 import EditSpot from './components/ManageSpot/EditSpots'
 
 
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "/spots/:spotId/edit",
         element: <EditSpot/>
+      },
+      {
+        path: "/manage-reviews",
+        element: <ManageReviews/>
       }
     ]
   }

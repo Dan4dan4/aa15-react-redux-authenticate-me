@@ -8,6 +8,9 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import './ProfileButton.css';
 import { useNavigate } from 'react-router';
 import * as spotActions from '../../store/spot'
+// import { reviewActions } from '../../store/review';
+import { getReviewsForUser } from '../../store/review';
+
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -46,6 +49,12 @@ function ProfileButton({ user }) {
     dispatch(spotActions.loadUserSpots())
     navigate('/manage-spots')
   }
+  //here
+  const manageReviews = (e) => {
+    e.preventDefault();
+    dispatch(getReviewsForUser()); 
+    navigate('/manage-reviews'); 
+  };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
@@ -88,6 +97,7 @@ function ProfileButton({ user }) {
         <li>{user.email}</li>
         <li>
           <button className="box" onClick={updateSpot}>Mange spots</button>
+          <button className="box" onClick={manageReviews}>Manage reviews</button>
           <button className="box" onClick={logout}>Log Out</button>
         </li>
       </ul>

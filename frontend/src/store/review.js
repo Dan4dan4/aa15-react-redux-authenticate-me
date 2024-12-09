@@ -105,11 +105,30 @@ export const getReviewsForSpot = (spotId) => async (dispatch) => {
 
   return response;
 };
+
+
+export const getReviewsForUser = () => async (dispatch) => { 
+    const response = await csrfFetch('/api/user/reviews'); 
+    const data = await response.json();
+  
+    if (response.ok) {
+      dispatch(setReviewsAction(data.Reviews));
+    } else {
+      throw {
+        errors: data.errors || ['Failed to load reviews.'],
+      };
+    }
+  
+    return response;
+  };
+  
+
 const initialState = {
     reviews: []
   };
-  
-  const reviewReducer = (state = initialState, action) => {
+
+
+const reviewReducer = (state = initialState, action) => {
     switch (action.type) {
       case ADD_REVIEW:
         return {
