@@ -368,62 +368,76 @@ router.get('/:spotId/reviews', async (req, res) => {
 
 // Creates review for spot
 router.post('/:spotId/reviews', async (req, res) => {
-    if (!req.user) {
-        return res.status(401).json({ "message": 'Authentication required' });
-    }
+    try {
+        if (!req.user) {
+            return res.status(401).json({
+                errors: { authentication: 'Authentication required' }
+            });
+        }
 
-    const { spotId } = req.params;
-    const spot = await Spot.findOne({where: {id:spotId}})
+        const { spotId } = req.params;
+        const spot = await Spot.findOne({ where: { id: spotId } });
 
-    if (!spot) {
-        return res.status(404).json({
-           "message": "Spot couldn't be found"
-        })
-    }
+        if (!spot) {
+            return res.status(404).json({
+                errors: { spot: "Spot couldn't be found" }
+            });
+        }
 
-    const currentSpotId = spot.id;
-    // const currentUserId = req.user.id;
+        const alreadyReviewed = await Review.findOne({
+            where: { spotId: spotId, userId: req.user.id }
+        });
 
-    const alreadyReviewed = await Review.findOne({where: {
-        spotId: spotId,
-        userId: req.user.id
-    }})
+        if (alreadyReviewed) {
+            return res.status(400).json({
+                errors: { review: "User already has a review for this spot" }
+            });
+        }
+        const { review, stars } = req.body;
 
-    if (alreadyReviewed) {
+        if (!review) {
+            return res.status(400).json({
+                errors: { review: "Review text is required" }
+            });
+        }
+
+        if (stars < 1 || stars > 5) {
+            return res.status(400).json({
+                errors: { stars: "Stars must be an integer from 1 to 5" }
+            });
+        }
+
+        const currentReview = await Review.create({
+            spotId: spot.id,
+            userId: req.user.id,
+            review,
+            stars
+        });
+        const spotReviews = await Review.findAndCountAll({
+            where: { spotId: spotId }
+        });
+
+        spot.avgRating = spotReviews.rows.reduce((acc, rev) => acc + rev.stars, 0) / spotReviews.count;
+        spot.numReviews = spotReviews.count;
+        await spot.save();
+        return res.status(201).json({
+            id: currentReview.id,
+            userId: currentReview.userId,
+            spotId: currentReview.spotId,
+            review: currentReview.review,
+            stars: currentReview.stars,
+            createdAt: currentReview.createdAt,
+            updatedAt: currentReview.updatedAt
+        });
+
+    } catch (error) {
+        console.error('Error creating review:', error);
         return res.status(500).json({
-            "message": "User already has a review for this spot"
-        })
+            errors: { general: "An unexpected error occurred. Please try again later." }
+        });
     }
+});
 
-    // Data Validation
-    const { review, stars } = req.body;
-
-    if (!review) { return res.status(400).json({
-        "message": "Bad Request",
-        "errors": {"review": "Review text is required"}})}
-
-    if (stars < 1 || stars > 5) { return res.status(400).json({
-        "message": "Bad Request",
-        "errors": {"review": "Stars must be an integer from 1 to 5"}})}
-
-    // Construct
-    const currentReview = await Review.create({spotId: spot.id, userId: req.user.id, review, stars})
-
-    const spotReviews = await Review.findAndCountAll({where: {spotId: spotId}});
-    spot.avgRating = (spotReviews.rows.map(rev => {return rev.stars}).reduce((acc, cv) => acc + cv)) / spotReviews.count;
-    spot.numReviews = spotReviews.count;
-    await spot.save();
-
-    return res.status(201).json({
-        id: currentReview.id,
-        userId: currentReview.userId,
-        spotId: currentReview.spotId,
-        review: currentReview.review,
-        stars: currentReview.stars,
-        createdAt: currentReview.createdAt,
-        updatedAt: currentReview.updatedAt
-    })
-})
 
 
 // Get bookings for spot
