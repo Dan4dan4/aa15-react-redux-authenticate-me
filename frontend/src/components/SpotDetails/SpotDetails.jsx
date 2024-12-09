@@ -15,7 +15,7 @@ function SpotDetails() {
     const { setModalContent, setOnModalClose } = useModal();
     const reviews = useSelector(state => state.reviews.reviews);
 
-    const [newReview, setNewReview] = useState(null);
+    const [newReview, setNewReview] = useState(null);  
 
     useEffect(() => {
         dispatch(getSpotDetails(id));
@@ -28,23 +28,24 @@ function SpotDetails() {
             const response = await dispatch(addReview({ spotId, review, stars }));
             if (response && response.review) {
                 setNewReview(response.review); 
+                dispatch(getReviewsForSpot(id)); 
             }
         } catch (error) {
             console.error("Error posting review:", error);
         }
     };
 
-
     if (!spot) {
         return <h2>Loading spot details...</h2>;
     }
-    //checks if host
+
+    
     const hostName = spot.Owner ? `${spot.Owner.firstName}` : "Unknown Host"; 
-    //checks if posted review
+    // check if user has already reviewd
     const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id); 
-    //checks owner
+    // owner check
     const isOwner = spot.ownerId === user?.id; 
-    //hides btn 
+    // hide btn if user and owner or reviewed
     const hideBtn = user && !isOwner && !userHasReviewed; 
 
     return (
