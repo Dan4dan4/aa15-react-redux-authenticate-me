@@ -382,11 +382,11 @@ router.post('/:spotId/reviews', async (req, res) => {
     }
 
     const currentSpotId = spot.id;
-    const currentUserId = req.user.id;
+    // const currentUserId = req.user.id;
 
     const alreadyReviewed = await Review.findOne({where: {
         spotId: spotId,
-        userId: currentUserId
+        userId: req.user.id
     }})
 
     if (alreadyReviewed) {
@@ -407,7 +407,7 @@ router.post('/:spotId/reviews', async (req, res) => {
         "errors": {"review": "Stars must be an integer from 1 to 5"}})}
 
     // Construct
-    const currentReview = await Review.create({spotId: currentSpotId, userId: currentUserId, review, stars})
+    const currentReview = await Review.create({spotId: spot.id, userId: req.user.id, review, stars})
 
     const spotReviews = await Review.findAndCountAll({where: {spotId: spotId}});
     spot.avgRating = (spotReviews.rows.map(rev => {return rev.stars}).reduce((acc, cv) => acc + cv)) / spotReviews.count;
