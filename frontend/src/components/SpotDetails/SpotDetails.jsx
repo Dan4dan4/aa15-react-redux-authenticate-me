@@ -37,7 +37,7 @@ function SpotDetails() {
     };
 
     if (!spot) {
-        return <h2>Loading spot details...</h2>;
+        return <h2>No spots</h2>;
     }
 
     // avg rating
