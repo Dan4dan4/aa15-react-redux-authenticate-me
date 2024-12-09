@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { getSpotDetails } from "../../store/spot";
-import { getReviewsForSpot, addReview } from "../../store/review"; 
+import { getReviewsForSpot, addReview } from "../../store/review";
 import './SpotDetails.css';
 import { useModal } from "../../context/Modal";
 import ReviewForm from "../ReviewForm/ReviewForm";
+import DeleteModalInDetails from "./DeleteModalInDetails"; 
 
 function SpotDetails() {
     const { id } = useParams();
@@ -27,8 +28,8 @@ function SpotDetails() {
         try {
             const response = await dispatch(addReview({ spotId, review, stars }));
             if (response && response.review) {
-                setNewReview(response.review); 
-                dispatch(getReviewsForSpot(id)); 
+                setNewReview(response.review);
+                dispatch(getReviewsForSpot(id));
             }
         } catch (error) {
             console.error("Error posting review:", error);
@@ -47,16 +48,23 @@ function SpotDetails() {
     const reviewCount = spot.reviews ? spot.reviews.length : 0;
     const reviewText = reviewCount === 1 ? "Review" : "Reviews";
     //host name
-    const hostName = spot.Owner ? `${spot.Owner.firstName}` : "Unknown Host"; 
-    //already reviewd check
-    const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id); 
+    const hostName = spot.Owner ? `${spot.Owner.firstName}` : "Unknown Host";
+    //already reviewed check
+    const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id);
     //owner check
-    const isOwner = spot.ownerId === user?.id; 
-    // hide btn if alr reviewed or owner
+    const isOwner = spot.ownerId === user?.id;
+    // hide btn if already reviewed or owner
     const hideBtn = user && !isOwner && !userHasReviewed;
     const formatDate = (date) => {
         const options = { year: 'numeric', month: 'long' };
         return new Date(date).toLocaleDateString(undefined, options);
+    };
+
+    const handleDeleteReview = (reviewId) => {
+        setModalContent(
+            <DeleteModalInDetails reviewId={reviewId} />
+        );
+        setOnModalClose(() => {}); // Optionally set any clean-up for modal close
     };
 
     return (
@@ -105,6 +113,13 @@ function SpotDetails() {
                                 <li key={review.id}>
                                     <p><strong>{review.user?.firstName || 'Unknown'}</strong> - {formatDate(review.createdAt)}</p>
                                     <p>{review.review} - {review.stars} stars</p>
+                                    {user && review.userId === user.id && (
+                                        <button
+                                            className="delete-review-button"
+                                            onClick={() => handleDeleteReview(review.id)}>
+                                            Delete Review
+                                        </button>
+                                    )}
                                 </li>
                             ))}
                         </ul>
@@ -112,8 +127,8 @@ function SpotDetails() {
                 </div>
                 {!isOwner && hideBtn && (
                     <div className="post-review-container">
-                        <button 
-                            className="post-review-button" 
+                        <button
+                            className="post-review-button"
                             onClick={() => {
                                 setModalContent(
                                     <ReviewForm spotId={id} onSubmit={handlePostReview} />
