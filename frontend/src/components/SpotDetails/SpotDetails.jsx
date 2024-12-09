@@ -39,21 +39,30 @@ function SpotDetails() {
         return <h2>Loading spot details...</h2>;
     }
 
-    
+    // avg rating
+    const averageRating = spot.reviews && spot.reviews.length > 0 ? (
+        (spot.reviews.reduce((acc, review) => acc + review.stars, 0) / spot.reviews.length).toFixed(2)
+    ) : null;
+
+    const reviewCount = spot.reviews ? spot.reviews.length : 0;
+    const reviewText = reviewCount === 1 ? "Review" : "Reviews";
+    //host name
     const hostName = spot.Owner ? `${spot.Owner.firstName}` : "Unknown Host"; 
-    // check if user has already reviewd
+    //already reviewd check
     const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id); 
-    // owner check
+    //owner check
     const isOwner = spot.ownerId === user?.id; 
-    // hide btn if user and owner or reviewed
-    const hideBtn = user && !isOwner && !userHasReviewed; 
+    // hide btn if alr reviewed or owner
+    const hideBtn = user && !isOwner && !userHasReviewed;
+    const formatDate = (date) => {
+        const options = { year: 'numeric', month: 'long' };
+        return new Date(date).toLocaleDateString(undefined, options);
+    };
 
     return (
         <div>
             <h1>{spot.name}</h1>
             <img src={spot.previewImage} alt={spot.title} className="spot-image2" />
-            <div className="thumbnail-container">
-            </div>
             <div className="container">
                 <div className="infobox">
                     <p>Hosted by {hostName}</p>
@@ -64,9 +73,14 @@ function SpotDetails() {
                     <div className="title-star-container">
                         <p>{spot.price} night</p>
                         <div className="star-container">
-                            <p className="star">⭐</p>
-                            {!spot.reviews || spot.reviews.length === 0 ? <span className="new2">New</span> : null}
+                            {averageRating && (
+                                <>
+                                    <p className="star">⭐</p>
+                                    <span className="average-rating">{averageRating}</span>
+                                </>
+                            )}
                         </div>
+                        <p>{reviewCount} {reviewText}</p>
                     </div>
                     <button className="reserve" onClick={() => alert("Feature coming soon")}>Reserve</button>
                 </div>
@@ -74,24 +88,23 @@ function SpotDetails() {
             <div className="review-section">
                 <div className="review-box">
                     <h2>Customer Reviews</h2>
-                    <p className="star2">⭐</p>
-                    {(!spot.reviews || spot.reviews.length === 0) ? 
-                        <span className="new3">New</span> : 
-                        <span className="average-rating">
-                            {(
-                                spot.reviews.reduce((acc, review) => acc + review.stars, 0) / spot.reviews.length
-                            ).toFixed(2)}
-                        </span>}
+
+                    {reviews && reviews.length === 0 && !isOwner && user && (
+                        <p>Be the first to post a review!</p>
+                    )}
+
                     {reviews && reviews.length > 0 && (
                         <ul>
                             {newReview && (
                                 <li key={newReview.id}>
-                                    {newReview.review} - {newReview.stars} stars
+                                    <p><strong>{newReview.user?.firstName || 'Unknown'}</strong> - {formatDate(newReview.createdAt)}</p>
+                                    <p>{newReview.review} - {newReview.stars} stars</p>
                                 </li>
                             )}
-                            {reviews.map((review) => (
+                            {reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map((review) => (
                                 <li key={review.id}>
-                                    {review.review} - {review.stars} stars
+                                    <p><strong>{review.user?.firstName || 'Unknown'}</strong> - {formatDate(review.createdAt)}</p>
+                                    <p>{review.review} - {review.stars} stars</p>
                                 </li>
                             ))}
                         </ul>
