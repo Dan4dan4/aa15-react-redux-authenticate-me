@@ -38,10 +38,13 @@ function SpotDetails() {
     if (!spot) {
         return <h2>Loading spot details...</h2>;
     }
-
+    //checks if host
     const hostName = spot.Owner ? `${spot.Owner.firstName}` : "Unknown Host"; 
+    //checks if posted review
     const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id); 
+    //checks owner
     const isOwner = spot.ownerId === user?.id; 
+    //hides btn 
     const hideBtn = user && !isOwner && !userHasReviewed; 
 
     return (
