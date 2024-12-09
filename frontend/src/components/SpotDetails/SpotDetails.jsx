@@ -1,32 +1,48 @@
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router"
-import { getSpotDetails } from "../../store/spot"
-import './SpotDetails.css'
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { getSpotDetails } from "../../store/spot";
+import { getReviewsForSpot, addReview } from "../../store/review"; 
+import './SpotDetails.css';
+import { useModal } from "../../context/Modal";
+import ReviewForm from "../ReviewForm/ReviewForm";
 
 function SpotDetails() {
-    const { id } = useParams(); 
-    const dispatch = useDispatch(); 
+    const { id } = useParams();
+    const dispatch = useDispatch();
     const spot = useSelector(state => state.spots.spotDetails);
-    const user = useSelector(state => state.session.user); 
+    const user = useSelector(state => state.session.user);
+    const { setModalContent, setOnModalClose } = useModal();
+    const reviews = useSelector(state => state.reviews.reviews);
+
+    const [newReview, setNewReview] = useState(null);
 
     useEffect(() => {
         dispatch(getSpotDetails(id));
-    }, [dispatch, id]); 
+        dispatch(getReviewsForSpot(id));
+    }, [dispatch, id]);
+
+    const handlePostReview = async (reviewData) => {
+        const { spotId, review, stars } = reviewData;
+        try {
+            const response = await dispatch(addReview({ spotId, review, stars }));
+            if (response && response.review) {
+                setNewReview(response.review); 
+            }
+        } catch (error) {
+            console.error("Error posting review:", error);
+        }
+    };
+
 
     if (!spot) {
-        return <h1>Spot doesnt exist</h1>;
+        return <h2>Loading spot details...</h2>;
     }
 
-    // console.log(spot)
-
-
-
-    const hostName = spot.Owner ? `${spot.Owner.firstName}` : "Unknown Host";
-    const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id);
-    const isOwner = spot.ownerId === user?.id;
-    const hideBtn = user && !isOwner && !userHasReviewed;
+    const hostName = spot.Owner ? `${spot.Owner.firstName}` : "Unknown Host"; 
+    const userHasReviewed = spot.reviews && spot.reviews.some(review => review.userId === user.id); 
+    const isOwner = spot.ownerId === user?.id; 
+    const hideBtn = user && !isOwner && !userHasReviewed; 
 
     return (
         <div>
@@ -56,29 +72,44 @@ function SpotDetails() {
                     <h2>Customer Reviews</h2>
                     <p className="star2">⭐</p>
                     {(!spot.reviews || spot.reviews.length === 0) ? 
-                        <span className="new3">New</span> 
-                        : <span className="average-rating">
+                        <span className="new3">New</span> : 
+                        <span className="average-rating">
                             {(
-                                spot.reviews.reduce((acc, review) => acc + review.rating, 0) / spot.reviews.length
+                                spot.reviews.reduce((acc, review) => acc + review.stars, 0) / spot.reviews.length
                             ).toFixed(2)}
                         </span>}
-                    {spot.reviews && spot.reviews.length > 0 && (
+                    {reviews && reviews.length > 0 && (
                         <ul>
-                            {spot.reviews.map((review) => (
+                            {newReview && (
+                                <li key={newReview.id}>
+                                    {newReview.review} - {newReview.stars} stars
+                                </li>
+                            )}
+                            {reviews.map((review) => (
                                 <li key={review.id}>
-                                    {review.comment} - {review.rating} stars
+                                    {review.review} - {review.stars} stars
                                 </li>
                             ))}
                         </ul>
                     )}
                 </div>
-                {hideBtn && (
+                {!isOwner && hideBtn && (
                     <div className="post-review-container">
                         <button 
                             className="post-review-button" 
-                            onClick={() => alert("make modal for this")}>
+                            onClick={() => {
+                                setModalContent(
+                                    <ReviewForm spotId={id} onSubmit={handlePostReview} />
+                                );
+                                setOnModalClose(() => {});
+                            }}>
                             Post Your Review
                         </button>
+                    </div>
+                )}
+                {!user && (
+                    <div className="login-prompt">
+                        <p>You must be logged in to post a review.</p>
                     </div>
                 )}
             </div>

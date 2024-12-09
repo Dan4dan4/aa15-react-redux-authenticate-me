@@ -4,7 +4,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import * as sessionActions from '../../store/session';
 import LoginFormModal from '../LoginFormModal/LogInFormModal';
 import SignupFormModal from '../SignupFormModal/SignupFormModal';
-import OpenModalButton from '../OpenModalButton/OpenModalButton'; // Import OpenModalButton
+import OpenModalButton from '../OpenModalButton/OpenModalButton'; 
 import './ProfileButton.css';
 import { useNavigate } from 'react-router';
 import * as spotActions from '../../store/spot'
@@ -16,7 +16,7 @@ function ProfileButton({ user }) {
   const navigate = useNavigate()
 
   const toggleMenu = (e) => {
-    e.stopPropagation();// Keep from bubbling up to document and triggering closeMenu
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
