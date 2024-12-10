@@ -7,6 +7,7 @@ import './SpotDetails.css';
 import { useModal } from "../../context/Modal";
 import ReviewForm from "../ReviewForm/ReviewForm";
 import DeleteModalInDetails from "./DeleteModalInDetails"; 
+import { reviewActions } from "../../store/review";
 
 function SpotDetails() {
     const { id } = useParams();
@@ -28,9 +29,11 @@ function SpotDetails() {
         try {
             const response = await dispatch(addReview({ spotId, review, stars }));
             if (response && response.review) {
+                const updatedReviews = [...reviews, response.review];
+                dispatch(reviewActions.setReviewsAction(updatedReviews)); 
+          
                 setNewReview(response.review);
-                dispatch(getReviewsForSpot(id));
-            }
+              }
         } catch (error) {
             console.error("Error posting review:", error);
         }
